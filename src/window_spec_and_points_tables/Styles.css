@@ -1,0 +1,11 @@
+.green .list-cell  {
+    -fx-text-fill: green;
+}
+
+.blue .list-cell {
+    -fx-text-fill: blue
+}
+
+.red .list-cell {
+    -fx-text-fill: red
+}
