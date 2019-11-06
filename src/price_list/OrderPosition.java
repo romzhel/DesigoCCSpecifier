@@ -1,5 +1,6 @@
 package price_list;
 
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 
 public class OrderPosition {
@@ -16,7 +17,19 @@ public class OrderPosition {
     private int amount;
 
     public OrderPosition(Row row) {
-        ssn = row.getCell(SSN_COLUMN) == null ? "" : row.getCell(SSN_COLUMN).getStringCellValue();
+        if (row.getCell(SSN_COLUMN) != null) {
+            CellType cellType = row.getCell(SSN_COLUMN).getCellTypeEnum();
+            switch (cellType) {
+                case STRING:
+                    ssn = row.getCell(SSN_COLUMN).getStringCellValue();
+                    break;
+                case NUMERIC:
+                    ssn = Integer.toString((int) row.getCell(SSN_COLUMN).getNumericCellValue());
+            }
+        } else {
+            ssn = "";
+        }
+//        ssn = row.getCell(SSN_COLUMN) == null ? "" : row.getCell(SSN_COLUMN).getStringCellValue();
         article = row.getCell(ARTICLE_COLUMN) == null ? "" : row.getCell(ARTICLE_COLUMN).getStringCellValue();
         descriptionEn = row.getCell(DESCRIPTION_EN_COLUMN) == null ? "" : row.getCell(DESCRIPTION_EN_COLUMN).getStringCellValue();
         descriptionRu = row.getCell(DESCRIPTION_RU_COLUMN) == null ? "" : row.getCell(DESCRIPTION_RU_COLUMN).getStringCellValue();

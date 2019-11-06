@@ -27,7 +27,8 @@ public class Size {
         return size;
     }
 
-    public boolean isTotallyOverLimited(FeatureSet.TotalLimit totalLimit) {
+    public int getAmount(FeatureSet.TotalLimit totalLimit) {
+        if (totalLimit == null) return 1;
         int totalPoints = 0;
 
         for (SizeItem si : size) {
@@ -36,7 +37,10 @@ public class Size {
             }
         }
 
-        return totalPoints > totalLimit.getTotalPoints();
+        int amount = totalPoints % totalLimit.getTotalPoints() > 0 ? totalPoints / totalLimit.getTotalPoints() + 1 :
+                totalPoints / totalLimit.getTotalPoints();
+
+        return Math.max(1, amount);
     }
 
     public boolean isCorrectPointType(String pointType) {

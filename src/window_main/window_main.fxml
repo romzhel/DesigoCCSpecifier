@@ -1,201 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="610.0" minWidth="1070.0" prefHeight="610.0"
-            prefWidth="1070.0" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="window_main.Controller">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1070.0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="window_main.Controller">
     <children>
-        <Accordion fx:id="accrd" cache="true" layoutX="66.0" layoutY="41.0" prefHeight="410.0" prefWidth="1064.0"
-                   AnchorPane.bottomAnchor="168.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0"
-                   AnchorPane.topAnchor="32.0">
+        <Accordion fx:id="accrd" cache="true" layoutX="66.0" layoutY="41.0" prefHeight="410.0" prefWidth="1064.0" AnchorPane.bottomAnchor="168.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="32.0">
             <panes>
                 <TitledPane fx:id="accrd2" text="Опции системы">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TableView fx:id="tvOptions" layoutX="7.0" layoutY="8.0" prefHeight="200.0"
-                                           prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <TableView fx:id="tvOptions" layoutX="7.0" layoutY="8.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <opaqueInsets>
-                                        <Insets/>
+                                        <Insets />
                                     </opaqueInsets>
                                 </TableView>
                             </children>
                             <padding>
-                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                             </padding>
                         </AnchorPane>
                     </content>
                     <font>
-                        <Font name="System Bold" size="12.0"/>
+                        <Font name="System Bold" size="12.0" />
                     </font>
                 </TitledPane>
                 <TitledPane fx:id="accrd1" text="Размер системы">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TableView fx:id="tvSize" layoutX="14.0" layoutY="14.0" prefHeight="200.0"
-                                           prefWidth="200.0" styleClass="changed" AnchorPane.bottomAnchor="0.0"
-                                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                           AnchorPane.topAnchor="0.0"/>
+                                <TableView fx:id="tvSize" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" styleClass="changed" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                             </children>
                             <padding>
-                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
+                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                             </padding>
                         </AnchorPane>
                     </content>
                     <font>
-                        <Font name="System Bold" size="12.0"/>
+                        <Font name="System Bold" size="12.0" />
                     </font>
                 </TitledPane>
             </panes>
         </Accordion>
-        <TableView fx:id="tvSpec" layoutX="3.0" layoutY="451.0" onContextMenuRequested="#contextMenuShow"
-                   prefHeight="158.0" prefWidth="1064.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="3.0"
-                   AnchorPane.rightAnchor="3.0">
+        <TableView fx:id="tvSpec" layoutX="3.0" layoutY="451.0" onContextMenuRequested="#contextMenuShow" prefHeight="188.0" prefWidth="1194.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0">
             <contextMenu>
                 <ContextMenu fx:id="tvSpecContentMenu">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#exportToExcel"
-                                  text="     Экспортировать в Excel     "/>
+                        <MenuItem mnemonicParsing="false" onAction="#exportToExcel" text="     Экспортировать в Excel     " />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#generateOrderForm" text="     Сгенерировать форму для заказа лицензий    " />
                     </items>
                 </ContextMenu>
             </contextMenu>
         </TableView>
-        <MenuBar fx:id="mainMenu" layoutX="4.0" layoutY="3.0" prefHeight="25.0" prefWidth="1064.0"
-                 AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+        <MenuBar fx:id="mainMenu" layoutX="4.0" layoutY="3.0" prefHeight="25.0" prefWidth="1064.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
             <menus>
                 <Menu fx:id="menuFile" mnemonicParsing="false" text="Файл">
                     <items>
-                        <MenuItem fx:id="miUseSpecification" mnemonicParsing="false" onAction="#useSpecification"
-                                  text="     Сделать расчёт по спецификации оборудования"/>
+                        <MenuItem fx:id="miUseSpecification" mnemonicParsing="false" onAction="#useSpecification" text="     Сделать расчёт по спецификации оборудования" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Расчёт">
+                <Menu mnemonicParsing="false" text="Desigo CC">
                     <items>
-                        <RadioMenuItem fx:id="calcNewSystem" mnemonicParsing="false" onAction="#setCalcMode"
-                                       text="     Новая система"/>
-                        <RadioMenuItem fx:id="calcSystemExt" mnemonicParsing="false" onAction="#setCalcMode"
-                                       text="     Расширение системы"/>
-                        <RadioMenuItem fx:id="calcSSMMigr" mnemonicParsing="false" onAction="#setCalcMode"
-                                       text="     Миграция SSM"/>
-                        <RadioMenuItem fx:id="calcPSMMigr" mnemonicParsing="false" onAction="#setCalcMode"
-                                       text="     Миграция PSM"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <Menu fx:id="additionalComponents" mnemonicParsing="false" text="     Дополнительно"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="menuResetData" mnemonicParsing="false" onAction="#resetCalcData"
-                                  text="    Сбросить данные расчёта   "/>
+                        <RadioMenuItem fx:id="calcNewSystem" mnemonicParsing="false" text="     Новая система" />
+                        <RadioMenuItem fx:id="calcSystemExt" mnemonicParsing="false" text="     Расширение системы" />
+                        <RadioMenuItem fx:id="calcSSMMigr" mnemonicParsing="false" text="     Миграция SSM" />
+                        <RadioMenuItem fx:id="calcPSMMigr" mnemonicParsing="false" text="     Миграция PSM" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#fillDccEngForm" text="     Заполнить форму заказа инженерной лицензии     " />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="menuResetData" mnemonicParsing="false" onAction="#resetCalcData" text="    Сбросить данные расчёта   " />
                     </items>
                 </Menu>
+            <Menu mnemonicParsing="false" text="XWorks">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#fillXwNewForm" text="     Заполнить форму заказа новой лицензии     " />
+                  <MenuItem mnemonicParsing="false" onAction="#fillXwExtForm" text="     Заполнить форму заказа обновления лицензии    " />
+              </items>
+            </Menu>
                 <Menu fx:id="menuAbout" mnemonicParsing="false" text="Справка">
                     <items>
-                        <MenuItem fx:id="about" mnemonicParsing="false" onAction="#infoAbout"
-                                  text="     О программе     "/>
+                        <MenuItem fx:id="about" mnemonicParsing="false" onAction="#infoAbout" text="     О программе     " />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
-        <AnchorPane fx:id="backgroundPane" focusTraversable="true" onMouseClicked="#closeInfoPane" opacity="0.24"
-                    prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="backgroundPane" focusTraversable="true" onMouseClicked="#closeInfoPane" opacity="0.24" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Pane layoutY="-3.0" prefHeight="405.0" prefWidth="700.0" styleClass="pane"
-                      stylesheets="@../resources/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                <Pane layoutY="-3.0" prefHeight="405.0" prefWidth="700.0" styleClass="pane" stylesheets="@../resources/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="infoPane" onMouseClicked="#closeInfoPane" prefHeight="369.0" prefWidth="670.0">
             <children>
-                <Pane prefHeight="369.0" prefWidth="670.0" styleClass="pane" stylesheets="@../resources/styles.css"
-                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                      AnchorPane.topAnchor="0.0">
+                <Pane prefHeight="369.0" prefWidth="670.0" styleClass="pane" stylesheets="@../resources/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <ImageView fitHeight="190.0" fitWidth="223.0" layoutX="27.0" layoutY="8.0" pickOnBounds="true"
-                                   preserveRatio="true">
+                        <ImageView fitHeight="190.0" fitWidth="223.0" layoutX="27.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../resources/logo.png"/>
+                                <Image url="@../resources/logo.png" />
                             </image>
                         </ImageView>
-                        <Label fx:id="lDCCVersionInfo" layoutX="288.0" layoutY="27.0" prefHeight="17.0"
-                               prefWidth="311.0" text="version info">
+                        <Label fx:id="lDCCVersionInfo" layoutX="288.0" layoutY="27.0" prefHeight="17.0" prefWidth="311.0" text="version info">
                             <font>
-                                <Font name="Arial Bold" size="13.0"/>
+                                <Font name="Arial Bold" size="13.0" />
                             </font>
                         </Label>
-                        <Label layoutX="29.0" layoutY="108.0" prefHeight="39.0" prefWidth="615.0"
-                               text="Данная утилита предназначена для составления оценочных спецификаций Desigo CC и расчёта их стоимости на основе указанного количества точек. "
-                               textAlignment="JUSTIFY" wrapText="true">
+                        <Label layoutX="29.0" layoutY="108.0" prefHeight="39.0" prefWidth="615.0" text="Данная утилита предназначена для составления оценочных спецификаций Desigo CC и расчёта их стоимости на основе указанного количества точек. " textAlignment="JUSTIFY" wrapText="true">
                             <font>
-                                <Font name="Arial" size="12.0"/>
+                                <Font name="Arial" size="12.0" />
                             </font>
                         </Label>
-                        <Label layoutX="29.0" layoutY="160.0" prefHeight="48.0" prefWidth="615.0"
-                               text="ВНИМАНИЕ!!! Полученные данные не являются конечными и требуют подтверждения сотрудниками департамента «Автоматизация и безопасность зданий» в ближайшем представительстве компании «Сименс»!!!"
-                               textAlignment="JUSTIFY" textFill="#f80505" wrapText="true">
+                        <Label layoutX="29.0" layoutY="160.0" prefHeight="48.0" prefWidth="615.0" text="ВНИМАНИЕ!!! Полученные данные не являются конечными и требуют подтверждения сотрудниками департамента «Автоматизация и безопасность зданий» в ближайшем представительстве компании «Сименс»!!!" textAlignment="JUSTIFY" textFill="#f80505" wrapText="true">
                             <font>
-                                <Font name="Arial Bold" size="12.0"/>
+                                <Font name="Arial Bold" size="12.0" />
                             </font>
                         </Label>
-                        <Label layoutX="29.0" layoutY="217.0" prefHeight="39.0" prefWidth="615.0"
-                               text="Пожелания и замечания по работе с программой c пометкой Desigo CC Specifier и указанием версии можно направить на электронную почту"
-                               textAlignment="JUSTIFY" wrapText="true">
+                        <Label layoutX="29.0" layoutY="217.0" prefHeight="39.0" prefWidth="615.0" text="Пожелания и замечания по работе с программой c пометкой Desigo CC Specifier и указанием версии можно направить на электронную почту" textAlignment="JUSTIFY" wrapText="true">
                             <font>
-                                <Font name="Arial" size="12.0"/>
+                                <Font name="Arial" size="12.0" />
                             </font>
                         </Label>
-                        <Hyperlink layoutX="216.0" layoutY="234.0" onAction="#sendEmail"
-                                   text="roman.zheludkov@siemens.com" textFill="#0e3bd6">
+                        <Hyperlink layoutX="216.0" layoutY="234.0" onAction="#sendEmail" text="roman.zheludkov@siemens.com" textFill="#0e3bd6">
                             <font>
-                                <Font name="Arial" size="12.0"/>
+                                <Font name="Arial" size="12.0" />
                             </font>
                         </Hyperlink>
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="29.0" layoutY="301.0"
-                               prefHeight="23.0" prefWidth="622.0" text="Для продолжения кликните мышью"
-                               textAlignment="CENTER" textFill="#17a10d" wrapText="true">
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="29.0" layoutY="301.0" prefHeight="23.0" prefWidth="622.0" text="Для продолжения кликните мышью" textAlignment="CENTER" textFill="#17a10d" wrapText="true">
                             <font>
-                                <Font name="Arial Bold Italic" size="13.0"/>
+                                <Font name="Arial Bold Italic" size="13.0" />
                             </font>
                         </Label>
-                        <Hyperlink layoutX="36.0" layoutY="269.0" onAction="#openWebPage"
-                                   text="Перейти на страницу Desigo CC в интернете" textFill="#0e3bd6">
+                        <Hyperlink layoutX="36.0" layoutY="269.0" onAction="#openWebPage" text="Перейти на страницу Desigo CC в интернете" textFill="#0e3bd6">
                             <font>
-                                <Font name="Arial Italic" size="12.0"/>
+                                <Font name="Arial Italic" size="12.0" />
                             </font>
                         </Hyperlink>
-                        <Hyperlink layoutX="360.0" layoutY="269.0" onAction="#openCloud"
-                                   text="Открыть общедоступные ресурсы в облаке" textFill="#0e3bd6">
+                        <Hyperlink layoutX="360.0" layoutY="269.0" onAction="#openCloud" text="Открыть общедоступные ресурсы в облаке" textFill="#0e3bd6">
                             <font>
-                                <Font name="Arial Italic" size="12.0"/>
+                                <Font name="Arial Italic" size="12.0" />
                             </font>
                         </Hyperlink>
-                        <Hyperlink layoutX="282.0" layoutY="75.0" onAction="#openManual"
-                                   text="Смотреть руководства по пользованию утилитой" textFill="#0e3bd6">
+                        <Hyperlink layoutX="282.0" layoutY="75.0" onAction="#openManual" text="Смотреть руководства по пользованию утилитой" textFill="#0e3bd6">
                             <font>
-                                <Font name="Arial Italic" size="12.0"/>
+                                <Font name="Arial Italic" size="12.0" />
                             </font>
                         </Hyperlink>
-                        <Label layoutX="49.0" layoutY="334.0" prefHeight="25.0" prefWidth="265.0"
-                               text="* Изобретательность для жизни" wrapText="true">
+                        <Label layoutX="49.0" layoutY="334.0" prefHeight="25.0" prefWidth="265.0" text="* Изобретательность для жизни" wrapText="true">
                             <font>
-                                <Font name="Arial Italic" size="12.0"/>
+                                <Font name="Arial Italic" size="12.0" />
                             </font>
                         </Label>
-                        <Label fx:id="lSchemeVersionInfo" layoutX="288.0" layoutY="50.0" prefHeight="17.0"
-                               prefWidth="311.0" text="version info">
+                        <Label fx:id="lSchemeVersionInfo" layoutX="288.0" layoutY="50.0" prefHeight="17.0" prefWidth="311.0" text="version info">
                             <font>
-                                <Font name="Arial Bold" size="13.0"/>
+                                <Font name="Arial Bold" size="13.0" />
                             </font>
                         </Label>
-                        <Label fx:id="build" alignment="CENTER_RIGHT" layoutX="373.0" layoutY="334.0" prefHeight="25.0"
-                               prefWidth="265.0" text="build" wrapText="true">
+                        <Label fx:id="build" alignment="CENTER_RIGHT" layoutX="373.0" layoutY="334.0" prefHeight="25.0" prefWidth="265.0" text="build" wrapText="true">
                             <font>
-                                <Font name="Arial Italic" size="12.0"/>
+                                <Font name="Arial Italic" size="12.0" />
                             </font>
                         </Label>
                     </children>

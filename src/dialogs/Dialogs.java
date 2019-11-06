@@ -41,6 +41,15 @@ public class Dialogs {
         return file;
     }
 
+    public File saveFile(String fileName) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Выберите место сохранения файла");
+        FileChooser.ExtensionFilter excelFilter = new FileChooser.ExtensionFilter("Все файлы", "*.*");//Расширение
+        fileChooser.getExtensionFilters().add(excelFilter);
+        fileChooser.setInitialFileName(fileName);
+        return fileChooser.showSaveDialog(AppCore.getMainStage());
+    }
+
     public void showMessage(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

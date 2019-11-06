@@ -18,21 +18,13 @@ public class Others {
     public Others(Workbook workbook) {
         specification = new ArrayList<>();
         items = new ArrayList<>();
+        Sheet sheet = workbook.getSheet(SHEET_NAME);
+        Row row = null;
+        int rowIndex = 0;
 
-        for (int sheetIndex = 0; sheetIndex < workbook.getNumberOfSheets(); sheetIndex++) {
-            Sheet sheet = workbook.getSheetAt(sheetIndex);
-
-            String sheetname = sheet.getSheetName();
-
-            if (sheet.getSheetName().equals(SHEET_NAME)) {
-                Row row = null;
-                int rowIndex = 0;
-
-                while ((row = sheet.getRow(++rowIndex)) != null) {
-                    OthersItem oi = new OthersItem(row);
-                    items.add(oi);
-                }
-            }
+        while ((row = sheet.getRow(++rowIndex)) != null) {
+            OthersItem oi = new OthersItem(row);
+            items.add(oi);
         }
     }
 

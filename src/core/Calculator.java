@@ -17,6 +17,7 @@ public class Calculator {
     private static String PRIVILEGED_MIGRATION_SUFFIX = "-PSM";
     private String errorOrderPosition = "";
     private boolean isSystemExtension;
+    private boolean isNewProject;
     private String migrationSuffix = "";
 
 
@@ -35,7 +36,7 @@ public class Calculator {
             if (featureSet.getSpecification().size() > 0) featureSet.addToSpecification(EMPTY);
             addSizeSupplyPositions(featureSet);
 
-            addOthersToSpec(featureSet);
+//            addOthersToSpec(featureSet);
 
             featureSet.addToSpecification(EMPTY);
             calcSummaryCostBySpec(featureSet);
@@ -57,7 +58,7 @@ public class Calculator {
 
     private void addFeatureSetToSpec(FeatureSet featureSet) {
         featureSet.addToSpecification(AppCore.getPriceList().getNewOrderPosition(
-                featureSet.getArticle().concat(migrationSuffix), 1));
+                featureSet.getArticle().concat(migrationSuffix), featureSet.getAmount()));
     }
 
     private void addPointPacketsToSpec(FeatureSet featureSet) {
@@ -114,7 +115,7 @@ public class Calculator {
 
     public void addSupplyFeatureSetPositions(FeatureSet featureSet) {
         for (String article : featureSet.getSupplyPositions().split("\\,")) {
-            addPositionToSpec(featureSet, article);
+            if (article != null && !article.isEmpty()) addPositionToSpec(featureSet, article);
         }
     }
 
@@ -138,6 +139,7 @@ public class Calculator {
         migrationSuffix = "";
         for (Toggle toggle : flags.getToggles()) {
             id = ((RadioMenuItem) toggle).getId();
+            if (id.equals("calcNewSystem")) isNewProject = toggle.isSelected();
             if (id.equals("calcSystemExt")) isSystemExtension = toggle.isSelected();
             if (id.equals("calcSSMMigr") && toggle.isSelected()) migrationSuffix = STANDART_MIGRATION_SUFFIX;
             if (id.equals("calcPSMMigr") && toggle.isSelected()) migrationSuffix = PRIVILEGED_MIGRATION_SUFFIX;
@@ -152,5 +154,9 @@ public class Calculator {
 
     public boolean isSystemExtension() {
         return isSystemExtension;
+    }
+
+    public boolean isNewProject() {
+        return isNewProject;
     }
 }

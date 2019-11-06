@@ -6,8 +6,7 @@ import excel.ExcelRow;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 import point_matrix.PointMatrix;
 import point_packets.PointPackets;
 import price_list.PriceList;
@@ -27,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AppCore {
-    private static String buildInfo = "1.1 от 07.08.2019";
+    private static String buildInfo = "1.2 от 06.11.2019";
     private static InputStream appDataIS = AppCore.class.getResourceAsStream("/data.xlsx");
     private static Workbook workbook;
     private static Stage mainStage;
@@ -43,6 +42,7 @@ public class AppCore {
     private static SpecTables specTables;
     private static Others others;
     private static VersionInfo versions;
+    private static ArrayList<String> orderFormBuildingTypes = new ArrayList<>();
 
     public static void init() {
         openResourceFile();
@@ -57,10 +57,22 @@ public class AppCore {
         pointPackets = new PointPackets(priceList);
         calculator = new Calculator();
         versions = new VersionInfo(workbook);
+        getBuildingTypes();
 
         closeResourceFile();
 
         calculator.getCosts();
+    }
+
+    private static void getBuildingTypes() {
+        Sheet sheet = workbook.getSheet("building_types");
+        Row row;
+        Cell cell;
+        int rowIndex = 0;
+
+        while ((row = sheet.getRow(rowIndex++)) != null) {
+            orderFormBuildingTypes.add(row.getCell(0).getStringCellValue());
+        }
     }
 
     private static void closeResourceFile() {
@@ -223,5 +235,9 @@ public class AppCore {
 
     public static String getBuildInfo() {
         return buildInfo;
+    }
+
+    public static ArrayList<String> getOrderFormBuildingTypes() {
+        return orderFormBuildingTypes;
     }
 }

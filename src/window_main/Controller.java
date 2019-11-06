@@ -3,6 +3,8 @@ package window_main;
 import core.AppCore;
 import dialogs.Dialogs;
 import excel.ExportSpecToExcel;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -16,11 +18,15 @@ import tables_data.options.Option;
 import tables_data.options.OptionsTable;
 import tables_data.size.SizeItem;
 import tables_data.size.SizeTable;
+import window_fill_order_form_dcc.DccOrderFormWindow;
+import window_fill_order_form_eng.EngOrderFormWindow;
 
 import java.awt.*;
 import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static window_fill_order_form_eng.EngOrderFormWindow.*;
 
 public class Controller implements Initializable {
     public static final String DESCRIPTION_COLUMN_NAME = "Описание";
@@ -86,9 +92,14 @@ public class Controller implements Initializable {
         calcSSMMigr.setToggleGroup(calcMenuGroup);
         calcPSMMigr.setToggleGroup(calcMenuGroup);
 
-        calcNewSystem.setSelected(true);
+        calcMenuGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                if (newValue != null) AppCore.getCalculator().setCalcMode(calcMenuGroup);
+            }
+        });
 
-        additionalComponents.getItems().addAll(AppCore.getOthers().getMenuItems());
+        calcNewSystem.setSelected(true);
     }
 
     private void initTables() {
@@ -182,16 +193,6 @@ public class Controller implements Initializable {
         openURI(MANUAL_URI);
     }
 
-    public void setCalcMode() {
-        AppCore.getCalculator().setCalcMode(calcMenuGroup);
-
-        if (calcSystemExt.isSelected()) {
-            selectMenuItems(additionalComponents, false);
-        } else {
-            selectMenuItems(additionalComponents, true);
-        }
-    }
-
     private void selectMenuItems(Menu menu, boolean value) {
         for (MenuItem menuItem : menu.getItems()) {
             ((RadioMenuItem) menuItem).setSelected(value);
@@ -205,5 +206,29 @@ public class Controller implements Initializable {
             new Dialogs().showMessage("Ошибка открытия страницы", "Не удалось перейти на страницу\n" + uri);
         }
 
+    }
+
+    public void generateOrderForm() {
+        FeatureSet selectedFs = tvSpec.getSelectionModel().getSelectedItem();
+        if (selectedFs != null) {
+            if (!selectedFs.isOverLimited()) {
+                new DccOrderFormWindow(tvSpec.getSelectionModel().getSelectedItem());
+            } else {
+                new Dialogs().showMessage("Экспорт спецификации в Excel", "Данный базовый пакет не может быть " +
+                        "использован из-за превышения его возможностей");
+            }
+        }
+    }
+
+    public void fillDccEngForm() {
+        new EngOrderFormWindow(DCC_ENG);
+    }
+
+    public void fillXwNewForm() {
+        new EngOrderFormWindow(XWORKS_ENG_NEW);
+    }
+
+    public void fillXwExtForm() {
+        new EngOrderFormWindow(XWORKS_ENG_EXT);
     }
 }

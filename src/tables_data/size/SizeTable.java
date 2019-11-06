@@ -156,13 +156,14 @@ public class SizeTable implements Tables {
 
                         //We get here all the info of the Person of this row
                         SizeItem sizeItem = getTableView().getItems().get(getIndex());
-                        int index = AppCore.getSize().getItems().indexOf(sizeItem);
+//                        int index = AppCore.getSize().getItems().indexOf(sizeItem);
+                        int index = getIndex();
 
                         if (sizeItem.getForOrder() > 0) {
-                            if (featureSet.isTotalLimited(sizeItem.getPointType()) && AppCore.getSize().isTotallyOverLimited(featureSet.getTotalLimit())) {
+                            /*if (featureSet.isTotalLimited(sizeItem.getPointType()) *//*&& AppCore.getSize().isTotallyOverLimited(featureSet.getTotalLimit())*//*) {
                                 setTextFill(Color.RED);
                                 setStyle("-fx-font-weight: normal; -fx-alignment: CENTER;");
-                            } else if (sizeItem.getForOrder() <= featureSet.getPointsIncluded(index)) {
+                            } else*/ if (sizeItem.getForOrder() <= featureSet.getPointsIncluded(index)) {
                                 setTextFill(Color.GREEN);
                                 setStyle("-fx-font-weight: bold; -fx-alignment: CENTER;");
                             } else if (featureSet.getPointsIncluded(index) == NOT_ACCESSIBLE) {
@@ -206,8 +207,8 @@ public class SizeTable implements Tables {
                         if (sizeItem.getForOrder() > 0) {
                             boolean isSizeExceeded = sizeItem.getForOrder() > featureSet.getPointMaximum(index) &&
                                     featureSet.getPointMaximum(index) != 0;
-                            boolean isTotalOverLimited = featureSet.isTotalLimited(sizeItem.getPointType()) &&
-                                    AppCore.getSize().isTotallyOverLimited(featureSet.getTotalLimit());
+                            boolean isTotalOverLimited = /*featureSet.isTotalLimited(sizeItem.getPointType()) &&
+                                    AppCore.getSize().isTotallyOverLimited(featureSet.getTotalLimit())*/ false;
                             boolean isExtensionOverLimited = AppCore.getCalculator().isSystemExtension() &&
                                     featureSet.getPointMaximum(index) != 0 &&
                                     (sizeItem.getForOrder() > (featureSet.getPointMaximum(index) - featureSet.getPointsIncluded(index)));

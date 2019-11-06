@@ -33,6 +33,7 @@ public class FeatureSet {
     private boolean overLimited;
     private double summaryСost;
     private ArrayList<OrderPosition> specification;
+    private int amount = 1;
 
     public FeatureSet(Row row) {
         sizeLimits = new ArrayList<>();
@@ -229,16 +230,20 @@ public class FeatureSet {
 
             if (sizeItem.getForOrder() > 0) {
                 boolean isSizeExceeded = sizeItem.getForOrder() > getPointMaximum(index) && getPointMaximum(index) != 0;
-                boolean isTotalOverLimited = isTotalLimited(sizeItem.getPointType()) &&
-                        AppCore.getSize().isTotallyOverLimited(getTotalLimit());
                 boolean isExtensionOverLimited = AppCore.getCalculator().isSystemExtension() &&
                         getPointMaximum(index) != 0 &&
                         (sizeItem.getForOrder() > (getPointMaximum(index) - getPointsIncluded(index)));
 
-                if (isSizeExceeded || isTotalOverLimited || isExtensionOverLimited) {
+                if (isSizeExceeded || isExtensionOverLimited) {
                     overLimited = true;
                 }
             }
         }
+
+        amount = AppCore.getSize().getAmount(totalLimit);
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }
