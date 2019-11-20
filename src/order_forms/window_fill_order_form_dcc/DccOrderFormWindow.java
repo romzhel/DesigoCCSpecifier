@@ -1,4 +1,4 @@
-package window_fill_order_form_dcc;
+package order_forms.window_fill_order_form_dcc;
 
 import core.AppCore;
 import javafx.fxml.FXMLLoader;

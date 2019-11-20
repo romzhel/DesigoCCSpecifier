@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="240.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order_forms.window_fill_order_form_eng.EngOrderFormWindowController">
+   <children>
+      <Button fx:id="btnCancel" layoutX="377.0" layoutY="198.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="158.0" text="Отмена" />
+      <Button fx:id="btnOk" layoutX="83.0" layoutY="198.0" mnemonicParsing="false" onAction="#createForm" prefHeight="25.0" prefWidth="158.0" text="ОК" />
+      <TextField fx:id="tfDongle" layoutX="182.0" layoutY="156.0" prefHeight="25.0" prefWidth="177.0" />
+      <Label fx:id="lDongle" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="160.0" prefHeight="17.0" prefWidth="158.0" text="Номер ключа защиты" />
+      <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="97.0" prefHeight="17.0" prefWidth="158.0" text="Заказчик*" />
+      <TextField fx:id="tfCustomer" layoutX="182.0" layoutY="93.0" prefHeight="25.0" prefWidth="381.0" promptText="заполняем латиницей" />
+      <Label fx:id="lAmount" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="129.0" prefHeight="17.0" prefWidth="158.0" text="Количество*" />
+      <ComboBox fx:id="cbAmount" layoutX="182.0" layoutY="125.0" prefHeight="25.0" prefWidth="71.0" />
+      <TextField fx:id="tfDebtor" layoutX="182.0" layoutY="60.0" prefHeight="25.0" prefWidth="381.0" promptText="заполняем латиницей" />
+      <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="64.0" prefHeight="17.0" prefWidth="158.0" text="Дебитор*" />
+      <TextField fx:id="tfDebtorN" layoutX="182.0" layoutY="26.0" prefHeight="25.0" prefWidth="381.0" promptText="заполняем латиницей" />
+      <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="30.0" prefHeight="17.0" prefWidth="158.0" text="Дебитор №*" />
+   </children>
+</AnchorPane>

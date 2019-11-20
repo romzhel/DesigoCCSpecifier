@@ -12,21 +12,21 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import order_forms.window_fill_order_form_dcc.DccOrderFormWindow;
+import order_forms.window_fill_order_form_eng.EngOrderFormWindow;
 import tables_data.feature_sets.FeatureSet;
 import tables_data.feature_sets.FeatureSetsTable;
 import tables_data.options.Option;
 import tables_data.options.OptionsTable;
 import tables_data.size.SizeItem;
 import tables_data.size.SizeTable;
-import window_fill_order_form_dcc.DccOrderFormWindow;
-import window_fill_order_form_eng.EngOrderFormWindow;
 
 import java.awt.*;
 import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static window_fill_order_form_eng.EngOrderFormWindow.*;
+import static order_forms.OrderFormType.*;
 
 public class Controller implements Initializable {
     public static final String DESCRIPTION_COLUMN_NAME = "Описание";

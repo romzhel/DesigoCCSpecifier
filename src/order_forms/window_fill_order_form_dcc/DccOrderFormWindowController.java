@@ -1,12 +1,13 @@
-package window_fill_order_form_dcc;
+package order_forms.window_fill_order_form_dcc;
 
 import core.AppCore;
 import dialogs.Dialogs;
-import excel.ExportDccOrderForm;
+import excel.ExportOrderForm;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import order_forms.OrderForm;
 import tables_data.feature_sets.FeatureSet;
 
 import java.net.URL;
@@ -14,6 +15,10 @@ import java.util.ResourceBundle;
 
 public class DccOrderFormWindowController implements Initializable {
     private FeatureSet featureSet;
+    @FXML
+    public TextField tfDebtorN;
+    @FXML
+    public TextField tfDebtor;
     @FXML
     public TextField tfCountryFull;
     @FXML
@@ -39,17 +44,17 @@ public class DccOrderFormWindowController implements Initializable {
     @FXML
     public TextField tfCsid;
     @FXML
-    Label lMigration;
+    public Label lMigration;
     @FXML
-    ComboBox<String> cbMigrSystemType;
+    public ComboBox<String> cbMigrSystemType;
     @FXML
-    Label lMigrSystemName;
+    public Label lMigrSystemName;
     @FXML
-    TextField tfMigrSystemName;
+    public TextField tfMigrSystemName;
     @FXML
-    Button btnOk;
+    public Button btnOk;
     @FXML
-    Button btnCancel;
+    public Button btnCancel;
     private OrderForm orderForm;
 
     @Override
@@ -67,7 +72,8 @@ public class DccOrderFormWindowController implements Initializable {
             return;
         }
 
-        new ExportDccOrderForm(orderForm, featureSet);
+//        new ExportDccOrderForm(orderForm, featureSet);
+        new ExportOrderForm(orderForm, featureSet.getSpecification(), "/dcc_licences_order_form.xlsx");
 
         close();
     }

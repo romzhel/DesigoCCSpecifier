@@ -1,23 +1,20 @@
-package window_fill_order_form_eng;
+package order_forms.window_fill_order_form_eng;
 
 import core.AppCore;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import window_fill_order_form_dcc.OrderForm;
+import order_forms.OrderFormType;
 
 import java.io.IOException;
 
 public class EngOrderFormWindow {
-    public static String type;
-    public static final String DCC_ENG = "DCC_ENG";
-    public static final String XWORKS_ENG_NEW = "XWORKS_ENG_NEW";
-    public static final String XWORKS_ENG_EXT = "XWORKS_ENG_EXT";
+    private static OrderFormType type;
 
     private EngOrderFormWindowController controller;
 
-    public EngOrderFormWindow(String type) {
+    public EngOrderFormWindow(OrderFormType type) {
         EngOrderFormWindow.type = type;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("engOrderFormWindow.fxml"));
         Stage stage = new Stage();
@@ -30,8 +27,6 @@ public class EngOrderFormWindow {
 
         controller = loader.getController();
 
-
-
         stage.initOwner(AppCore.getMainStage());
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Заполнение данных");
@@ -40,5 +35,7 @@ public class EngOrderFormWindow {
         stage.show();
     }
 
-
+    public static OrderFormType getType() {
+        return type;
+    }
 }
