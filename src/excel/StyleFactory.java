@@ -1,7 +1,6 @@
 package excel;
 
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -18,6 +17,7 @@ public class StyleFactory {
         font.setFontName("Arial");
         font.setFontHeight((short) 200);
         cellStyle.setFont(font);
+        cellStyle.setLocked(false);
     }
 
     public static StyleFactory createStyle(XSSFWorkbook workbook) {
@@ -57,35 +57,24 @@ public class StyleFactory {
         return this;
     }
 
-    /*public StyleFactory setBigBold() {
-        Font font = workbook.createFont();
-        font.setFontName("Arial");
-        font.setBold(true);
-        font.setFontHeight((short) 220);
-        cellStyle.setFont(font);
-        return this;
-    }*/
-
     public StyleFactory setFontSize(int size) {
         cellStyle.getFont().setFontHeight((short) size);
         return this;
     }
 
     public StyleFactory setBold() {
-        /*Font font = workbook.createFont();
-        font.setFontName("Arial");
-        font.setBold(true);
-        font.setFontHeight((short) 200);
-        cellStyle.setFont(font);
-        cellStyle.setFillBackgroundColor((short) 64);*/
         cellStyle.getFont().setBold(true);
         return this;
     }
 
     public StyleFactory setBackground() {
-//        cellStyle.setFillBackgroundColor(new XSSFColor(new java.awt.Color(217, 217, 217)));
         cellStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(217, 217, 217)));
         cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        return this;
+    }
+
+    public StyleFactory setProtected() {
+        cellStyle.setLocked(true);
         return this;
     }
 }

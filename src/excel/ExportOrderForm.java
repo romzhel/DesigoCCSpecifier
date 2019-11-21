@@ -6,10 +6,7 @@ import order_forms.OrderForm;
 import order_forms.OrderFormItem;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 import price_list.OrderPosition;
 
 import java.io.File;
@@ -19,7 +16,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class ExportOrderForm {
-//    private InputStream appDataIS; = AppCore.class.getResourceAsStream("/dcc_licences_order_form.xlsx");
+    private final String PASSWORD = "FiGVam";
     private XSSFWorkbook workbook;
 
     public ExportOrderForm(OrderForm orderForm, ArrayList<OrderPosition> specification, String templateFile) {
@@ -59,6 +56,8 @@ public class ExportOrderForm {
 
         //total cost
         cellDecorator.decorate("S" + rowNum + ":T" + rowNum, CellStyle.STYLE_CURRENCY_BIG_BOLD_BORDER, totalCost);
+
+        sheet.protectSheet(PASSWORD);
     }
 
     private void saveToExcelFile(OrderForm orderForm) {

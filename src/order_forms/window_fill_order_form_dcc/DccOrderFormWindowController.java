@@ -68,11 +68,9 @@ public class DccOrderFormWindowController implements Initializable {
         orderForm = OrderForm.createDccOrderForm(this);
 
         if (orderForm.checkFieldsFilling()) {
-            new Dialogs().showMessage("Ввод данных", "Необходимо заполнить все поля на латинице");
             return;
         }
 
-//        new ExportDccOrderForm(orderForm, featureSet);
         new ExportOrderForm(orderForm, featureSet.getSpecification(), "/dcc_licences_order_form.xlsx");
 
         close();

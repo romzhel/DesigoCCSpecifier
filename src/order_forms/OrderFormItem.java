@@ -11,7 +11,8 @@ public class OrderFormItem<T extends Control> {
     private String value;
     private boolean hidden;
     private CellStyle cellStyle = CellStyle.STYLE_LEFT_BORDER;
-    private CheckOtherConditions checkOtherConditions;
+    private CheckType checkType = CheckType.LETTERS_EN;
+    private CheckConditions linkedItem;
 
     private OrderFormItem() {
     }
@@ -35,10 +36,8 @@ public class OrderFormItem<T extends Control> {
         return "";
     }
 
-    public OrderFormItem setVisible(boolean visible) {
-        this.visible = visible;
-        if (control != null) control.setVisible(visible);
-        if (label != null) label.setVisible(visible);
+    public OrderFormItem setValue(String value) {
+        this.value = value;
         return this;
     }
 
@@ -46,39 +45,36 @@ public class OrderFormItem<T extends Control> {
         return visible;
     }
 
-    public boolean isWrongFilled(boolean checkOther) {
+    public OrderFormItem setVisible(boolean visible) {
+        this.visible = visible;
+        if (control != null) control.setVisible(visible);
+        if (label != null) label.setVisible(visible);
+        return this;
+    }
 
-        if (control != null) {
-            boolean thisItemIsWrong = (visible && (getValue() == null || getValue().isEmpty() || getValue().matches(".*[а-яА-Я]+.*")));
+    public boolean isWrongFilled() {
+        if (control != null && control.isVisible()) {
+            boolean thisItemIsWrong = getValue() == null || getValue().isEmpty() || checkType.check(getValue());
 
-            if (checkOtherConditions != null && checkOther) {
-                boolean otherItemsIsWrong = checkOtherConditions.checkIsWrong();
+            OrderFormItem otherLinkedItem;
+            if (linkedItem != null && (otherLinkedItem = linkedItem.getLinkedItem()) != null && otherLinkedItem.isVisible()) {
+                boolean noValue = otherLinkedItem.getValue() == null || otherLinkedItem.getValue().isEmpty();
+                boolean wrongValue = otherLinkedItem.checkType.check(otherLinkedItem.getValue());
 
-                control.setStyle(thisItemIsWrong && otherItemsIsWrong ? "-fx-border-color: orange;" : "-fx-border-color: green;");
-                return thisItemIsWrong && otherItemsIsWrong;
+                boolean otherItemIsWrong = noValue || wrongValue;
+
+                control.setStyle(thisItemIsWrong && otherItemIsWrong ? "-fx-border-color: orange;" : "-fx-border-color: green;");
+                return thisItemIsWrong && otherItemIsWrong;
             } else {
-                if (checkOther) {
-                    control.setStyle(thisItemIsWrong ? "-fx-border-color: red;" : "-fx-border-color: green;");
-                }
+                control.setStyle(thisItemIsWrong ? "-fx-border-color: red;" : "-fx-border-color: green;");
                 return thisItemIsWrong;
             }
         }
         return false;
     }
 
-
     public T getControl() {
         return control;
-    }
-
-    public OrderFormItem setCellStyle(CellStyle cellStyle) {
-        this.cellStyle = cellStyle;
-        return this;
-    }
-
-    public OrderFormItem setValue(String value) {
-        this.value = value;
-        return this;
     }
 
     public OrderFormItem setControl(T control) {
@@ -91,18 +87,8 @@ public class OrderFormItem<T extends Control> {
         return this;
     }
 
-    public OrderFormItem setPosition(String position) {
-        this.position = position;
-        return this;
-    }
-
-    public OrderFormItem setHidden(boolean hidden) {
-        this.hidden = hidden;
-        return this;
-    }
-
-    public OrderFormItem setLinkedCheck(CheckOtherConditions check) {
-        checkOtherConditions = check;
+    public OrderFormItem setLinkedItem(CheckConditions check) {
+        linkedItem = check;
         return this;
     }
 
@@ -110,15 +96,35 @@ public class OrderFormItem<T extends Control> {
         return hidden;
     }
 
+    public OrderFormItem setHidden(boolean hidden) {
+        this.hidden = hidden;
+        return this;
+    }
+
     public String getPosition() {
         return position;
+    }
+
+    public OrderFormItem setPosition(String position) {
+        this.position = position;
+        return this;
     }
 
     public CellStyle getCellStyle() {
         return cellStyle;
     }
 
-    public interface CheckOtherConditions {
-        boolean checkIsWrong();
+    public OrderFormItem setCellStyle(CellStyle cellStyle) {
+        this.cellStyle = cellStyle;
+        return this;
+    }
+
+    public OrderFormItem setCheckType(CheckType checkType) {
+        this.checkType = checkType;
+        return this;
+    }
+
+    public interface CheckConditions {
+        OrderFormItem getLinkedItem();
     }
 }

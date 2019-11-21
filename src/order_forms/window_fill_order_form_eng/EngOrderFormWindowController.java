@@ -1,7 +1,6 @@
 package order_forms.window_fill_order_form_eng;
 
 import core.AppCore;
-import dialogs.Dialogs;
 import excel.ExportOrderForm;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -44,7 +43,6 @@ public class EngOrderFormWindowController implements Initializable {
 
     public void createForm() {
         if (orderForm.checkFieldsFilling()) {
-            new Dialogs().showMessage("Ввод данных", "Необходимо заполнить все поля на латинице");
             return;
         }
 
@@ -62,7 +60,6 @@ public class EngOrderFormWindowController implements Initializable {
                 orderPositions.add(AppCore.getPriceList().getNewOrderPosition("CTX-LEN.5M-EXT", amount));
         }
 
-//        new ExportEngOrderForm(orderForm, orderPositions);
         new ExportOrderForm(orderForm, orderPositions, "/eng_licences_order_form.xlsx");
 
         close();

@@ -13,14 +13,14 @@ public enum CellStyle {
             return StyleFactory.createStyle(workbook).setAlignment(LEFT).setBold().setBackground().get();
         }
     },
-    STYLE_LEFT {
-        public XSSFCellStyle get(XSSFWorkbook workbook) {
-            return StyleFactory.createStyle(workbook).setAlignment(LEFT).get();
-        }
-    },
     STYLE_LEFT_BORDER {
         public XSSFCellStyle get(XSSFWorkbook workbook) {
             return StyleFactory.createStyle(workbook).setAlignment(LEFT).setBorders(BorderStyle.MEDIUM).get();
+        }
+    },
+    STYLE_LEFT_BORDER_PROTECTED {
+        public XSSFCellStyle get(XSSFWorkbook workbook) {
+            return StyleFactory.createStyle(workbook).setAlignment(LEFT).setBorders(BorderStyle.MEDIUM).setProtected().get();
         }
     },
     STYLE_CENTER_BORDER {

@@ -22,11 +22,17 @@ public class CellDecorator {
         XSSFCell cell = null;
 
         if ((cell = row.getCell(getColumn(rangeParts[0]))) == null) {
-            cell = row.createCell(getColumn(rangeParts[0]), CellType.STRING);
+            cell = row.createCell(getColumn(rangeParts[0]));
         }
 
         if (ofi.isVisible() && ofi.getValue() != null && !ofi.getValue().isEmpty()) {
-            cell.setCellValue(ofi.getValue());
+            if (ofi.getValue().matches("^\\d+$") && ofi.getValue().length() < 12) {
+                cell.setCellType(CellType.NUMERIC);
+                cell.setCellValue(Long.parseLong(ofi.getValue()));
+            } else {
+                cell.setCellType(CellType.STRING);
+                cell.setCellValue(ofi.getValue());
+            }
         }
 
         if (ofi.getCellStyle() != null && !ofi.isHidden()) {
