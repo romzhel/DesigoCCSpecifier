@@ -7,7 +7,7 @@ public class OrderFormItem<T extends Control> {
     private T control;
     private Label label;
     private boolean visible = true;
-    private String position;
+    private Position position;
     private String value;
     private boolean hidden;
     private CellStyle cellStyle = CellStyle.STYLE_LEFT_BORDER;
@@ -101,12 +101,12 @@ public class OrderFormItem<T extends Control> {
         return this;
     }
 
-    public String getPosition() {
+    public Position getPosition() {
         return position;
     }
 
     public OrderFormItem setPosition(String position) {
-        this.position = position;
+        this.position = new Position(position);
         return this;
     }
 
@@ -126,5 +126,17 @@ public class OrderFormItem<T extends Control> {
 
     public interface CheckConditions {
         OrderFormItem getLinkedItem();
+    }
+
+    public void displayValue(String value) {
+        if (control != null) {
+            if (control instanceof TextField) {
+                ((TextField) control).setText(value);
+            } else if (control instanceof TextArea) {
+                ((TextArea) control).setText(value);
+            } else if (control instanceof ComboBox) {
+                ((ComboBox<String>) control).setValue(value);
+            }
+        }
     }
 }

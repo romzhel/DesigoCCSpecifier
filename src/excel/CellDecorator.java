@@ -15,7 +15,7 @@ public class CellDecorator {
     }
 
     public void decorate(OrderFormItem ofi) {
-        String[] rangeParts = ofi.getPosition().split("\\:");
+        String[] rangeParts = ofi.getPosition().getFullPosition().split("\\:");
         if (getRow(rangeParts[0]) < 0 || getColumn(rangeParts[0]) < 0) return;
 
         XSSFRow row = sheet.getRow(getRow(rangeParts[0]));
@@ -39,7 +39,7 @@ public class CellDecorator {
             cell.setCellStyle(ofi.getCellStyle().get(sheet.getWorkbook()));
         }
 
-        if (ofi.getPosition().contains(":")) {
+        if (ofi.getPosition().isInterval()) {
             int start = getColumn(rangeParts[0]) + 1;
             int end = getColumn(rangeParts[1]);
 
@@ -54,7 +54,7 @@ public class CellDecorator {
                 }
             }
 
-            sheet.addMergedRegion(CellRangeAddress.valueOf(ofi.getPosition()));
+            sheet.addMergedRegion(CellRangeAddress.valueOf(ofi.getPosition().getFullPosition()));
         }
     }
 

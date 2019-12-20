@@ -8,7 +8,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import order_forms.OrderForm;
+import order_forms.DataLoaderFromExcelToUi;
+import order_forms.OrderFormFactory;
 import price_list.OrderPosition;
 
 import java.net.URL;
@@ -16,12 +17,14 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class EngOrderFormWindowController implements Initializable {
-    private OrderForm orderForm;
+    private OrderFormFactory orderForm;
 
     @FXML
     public TextField tfDebtorN;
     @FXML
-    public TextField tfDebtor;
+    public TextField tfDebtorEn;
+    @FXML
+    public TextField tfDebtorRu;
     @FXML
     public TextField tfCustomer;
     @FXML
@@ -38,7 +41,7 @@ public class EngOrderFormWindowController implements Initializable {
         cbAmount.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
         cbAmount.getSelectionModel().select(0);
 
-        orderForm = OrderForm.createEngOrderForm(this, EngOrderFormWindow.getType());
+        orderForm = OrderFormFactory.createEngOrderForm(this, EngOrderFormWindow.getType());
     }
 
     public void createForm() {
@@ -67,5 +70,9 @@ public class EngOrderFormWindowController implements Initializable {
 
     public void close() {
         ((Stage) tfCustomer.getScene().getWindow()).close();
+    }
+
+    public void loadData(){
+        new DataLoaderFromExcelToUi(orderForm);
     }
 }

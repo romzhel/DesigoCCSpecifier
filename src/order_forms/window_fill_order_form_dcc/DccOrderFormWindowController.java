@@ -1,13 +1,13 @@
 package order_forms.window_fill_order_form_dcc;
 
 import core.AppCore;
-import dialogs.Dialogs;
 import excel.ExportOrderForm;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import order_forms.OrderForm;
+import order_forms.DataLoaderFromExcelToUi;
+import order_forms.OrderFormFactory;
 import tables_data.feature_sets.FeatureSet;
 
 import java.net.URL;
@@ -18,7 +18,9 @@ public class DccOrderFormWindowController implements Initializable {
     @FXML
     public TextField tfDebtorN;
     @FXML
-    public TextField tfDebtor;
+    public TextField tfDebtorEn;
+    @FXML
+    public TextField tfDebtorRu;
     @FXML
     public TextField tfCountryFull;
     @FXML
@@ -30,7 +32,9 @@ public class DccOrderFormWindowController implements Initializable {
     @FXML
     public TextField tfCustomer;
     @FXML
-    public TextArea taAddress;
+    public TextArea taAddressEn;
+    @FXML
+    public TextArea taAddressRu;
     @FXML
     public TextField tfPostIndex;
     @FXML
@@ -55,17 +59,17 @@ public class DccOrderFormWindowController implements Initializable {
     public Button btnOk;
     @FXML
     public Button btnCancel;
-    private OrderForm orderForm;
+    private OrderFormFactory orderForm;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cbBuildingType.getItems().addAll(AppCore.getOrderFormBuildingTypes());
         cbMigrSystemType.getItems().addAll("Desigo Insight", "MM/MK8000");
-        orderForm = OrderForm.createDccOrderForm(this);
+        orderForm = OrderFormFactory.createDccOrderForm(this);
     }
 
     public void createForm() {
-        orderForm = OrderForm.createDccOrderForm(this);
+        orderForm = OrderFormFactory.createDccOrderForm(this);
 
         if (orderForm.checkFieldsFilling()) {
             return;
@@ -82,5 +86,9 @@ public class DccOrderFormWindowController implements Initializable {
 
     public void setFeatureSet(FeatureSet featureSet) {
         this.featureSet = featureSet;
+    }
+
+    public void loadData(){
+        new DataLoaderFromExcelToUi(orderForm);
     }
 }

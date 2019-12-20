@@ -2,7 +2,7 @@ package excel;
 
 import core.AppCore;
 import dialogs.Dialogs;
-import order_forms.OrderForm;
+import order_forms.OrderFormFactory;
 import order_forms.OrderFormItem;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -19,14 +19,14 @@ public class ExportOrderForm {
     private final String PASSWORD = "FiGVam";
     private XSSFWorkbook workbook;
 
-    public ExportOrderForm(OrderForm orderForm, ArrayList<OrderPosition> specification, String templateFile) {
+    public ExportOrderForm(OrderFormFactory orderForm, ArrayList<OrderPosition> specification, String templateFile) {
         getTemplate(templateFile);
         fillSheet(orderForm, specification);
         saveToExcelFile(orderForm);
         closeWorkbook();
     }
 
-    private void fillSheet(OrderForm orderForm, ArrayList<OrderPosition> specification) {
+    private void fillSheet(OrderFormFactory orderForm, ArrayList<OrderPosition> specification) {
         XSSFSheet sheet = workbook.getSheetAt(0);
 
         CellDecorator cellDecorator = new CellDecorator(sheet);
@@ -60,7 +60,7 @@ public class ExportOrderForm {
         sheet.protectSheet(PASSWORD);
     }
 
-    private void saveToExcelFile(OrderForm orderForm) {
+    private void saveToExcelFile(OrderFormFactory orderForm) {
         String fileName = orderForm.getFileNamePart().concat(".xlsx");
         File destinationFile = new Dialogs().saveFile(fileName);
         if (destinationFile != null) {

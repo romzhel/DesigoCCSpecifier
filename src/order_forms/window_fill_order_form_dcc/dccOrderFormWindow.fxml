@@ -6,36 +6,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="554.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order_forms.window_fill_order_form_dcc.DccOrderFormWindowController">
+<AnchorPane prefHeight="583.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order_forms.window_fill_order_form_dcc.DccOrderFormWindowController">
    <children>
-      <Label alignment="CENTER_RIGHT" layoutX="26.0" layoutY="101.0" prefHeight="17.0" prefWidth="158.0" text="Страна*" />
-      <TextField fx:id="tfCountryFull" layoutX="194.0" layoutY="97.0" prefHeight="25.0" prefWidth="491.0" text="Russia" />
-      <TextField fx:id="tfCountryShort" alignment="CENTER" layoutX="685.0" layoutY="97.0" prefHeight="25.0" prefWidth="52.0" text="RU" />
-      <TextField fx:id="tfCompany" layoutX="194.0" layoutY="132.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем латиницей" />
-      <Label alignment="CENTER_RIGHT" layoutX="26.0" layoutY="136.0" prefHeight="17.0" prefWidth="158.0" text="Компания*" />
-      <Label alignment="CENTER_RIGHT" layoutX="26.0" layoutY="171.0" prefHeight="17.0" prefWidth="158.0" text="Название проекта*" />
-      <TextField fx:id="tfProjectName" layoutX="194.0" layoutY="167.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем латиницей" />
-      <TextField fx:id="tfCustomer" layoutX="194.0" layoutY="200.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем латиницей" />
-      <Label alignment="CENTER_RIGHT" layoutX="26.0" layoutY="204.0" prefHeight="17.0" prefWidth="158.0" text="Заказчик*" />
-      <Label alignment="CENTER_RIGHT" layoutX="26.0" layoutY="239.0" prefHeight="17.0" prefWidth="158.0" text="Адрес*" />
-      <TextArea fx:id="taAddress" layoutX="194.0" layoutY="238.0" prefHeight="93.0" prefWidth="544.0" promptText="заполняем латиницей" />
-      <Label alignment="CENTER_RIGHT" layoutX="26.0" layoutY="335.0" prefHeight="17.0" prefWidth="158.0" text="Индекс*" />
-      <TextField fx:id="tfPostIndex" layoutX="194.0" layoutY="331.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем цифрами" />
-      <Label alignment="CENTER_RIGHT" layoutX="26.0" layoutY="370.0" prefHeight="17.0" prefWidth="158.0" text="Тип здания*" />
-      <ComboBox fx:id="cbBuildingType" layoutX="194.0" layoutY="366.0" prefHeight="25.0" prefWidth="544.0" promptText="Выберите тип здания" />
-      <TextField fx:id="tfCsid" layoutX="625.0" layoutY="459.0" prefHeight="25.0" prefWidth="112.0" promptText="заполняем цифрами" />
-      <Label fx:id="lCsid" alignment="CENTER_RIGHT" layoutX="373.0" layoutY="463.0" prefHeight="17.0" prefWidth="221.0" text="Идентификатор объекта (CSID)" />
-      <Label fx:id="lDongle" alignment="CENTER_RIGHT" layoutX="26.0" layoutY="463.0" prefHeight="17.0" prefWidth="158.0" text="Номер ключа защиты" />
-      <TextField fx:id="tfDongle" layoutX="194.0" layoutY="459.0" prefHeight="25.0" prefWidth="177.0" promptText="заполняем цифрами" />
-      <Button fx:id="btnOk" layoutX="166.0" layoutY="508.0" mnemonicParsing="false" onAction="#createForm" prefHeight="25.0" prefWidth="158.0" text="ОК" />
-      <Button fx:id="btnCancel" layoutX="460.0" layoutY="508.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="158.0" text="Отмена" />
-      <Label fx:id="lMigration" alignment="CENTER_RIGHT" layoutX="7.0" layoutY="426.0" prefHeight="17.0" prefWidth="177.0" text="Миграция системы" />
-      <ComboBox fx:id="cbMigrSystemType" layoutX="194.0" layoutY="423.0" prefHeight="25.0" prefWidth="130.0" promptText="Выберите тип" />
-      <TextField fx:id="tfMigrSystemName" layoutX="516.0" layoutY="422.0" prefHeight="25.0" prefWidth="221.0" promptText="заполняем латиницей" />
-      <Label fx:id="lMigrSystemName" alignment="CENTER_RIGHT" layoutX="352.0" layoutY="426.0" prefHeight="17.0" prefWidth="158.0" text="Имя объекта/системы" />
-      <Label alignment="CENTER_RIGHT" layoutX="26.0" layoutY="33.0" prefHeight="17.0" prefWidth="158.0" text="Дебитор №*" />
-      <TextField fx:id="tfDebtorN" layoutX="194.0" layoutY="29.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем цифрами" />
-      <Label alignment="CENTER_RIGHT" layoutX="26.0" layoutY="67.0" prefHeight="17.0" prefWidth="158.0" text="Дебитор*" />
-      <TextField fx:id="tfDebtor" layoutX="194.0" layoutY="63.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем латиницей" />
+      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="134.0" prefHeight="17.0" prefWidth="158.0" text="Страна*" />
+      <TextField fx:id="tfCountryFull" layoutX="235.0" layoutY="130.0" prefHeight="25.0" prefWidth="491.0" text="Russia" />
+      <TextField fx:id="tfCountryShort" alignment="CENTER" layoutX="726.0" layoutY="130.0" prefHeight="25.0" prefWidth="52.0" text="RU" />
+      <TextField fx:id="tfCompany" layoutX="235.0" layoutY="165.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем латиницей" />
+      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="169.0" prefHeight="17.0" prefWidth="158.0" text="Заказчик*" />
+      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="204.0" prefHeight="17.0" prefWidth="158.0" text="Название проекта*" />
+      <TextField fx:id="tfProjectName" layoutX="235.0" layoutY="200.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем латиницей" />
+      <TextField fx:id="tfCustomer" layoutX="235.0" layoutY="233.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем кириллицей" />
+      <Label alignment="CENTER_RIGHT" layoutX="4.0" layoutY="237.0" prefHeight="17.0" prefWidth="221.0" text="Конечный заказчик (лиц. согл.)*" />
+      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="268.0" prefHeight="17.0" prefWidth="158.0" text="Адрес (англ)*" />
+      <TextArea fx:id="taAddressEn" layoutX="235.0" layoutY="267.0" prefHeight="53.0" prefWidth="544.0" promptText="заполняем латиницей" />
+      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="387.0" prefHeight="17.0" prefWidth="158.0" text="Индекс*" />
+      <TextField fx:id="tfPostIndex" layoutX="235.0" layoutY="383.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем цифрами" />
+      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="422.0" prefHeight="17.0" prefWidth="158.0" text="Тип здания*" />
+      <ComboBox fx:id="cbBuildingType" layoutX="235.0" layoutY="418.0" prefHeight="25.0" prefWidth="544.0" promptText="Выберите тип здания" />
+      <TextField fx:id="tfCsid" layoutX="666.0" layoutY="489.0" prefHeight="25.0" prefWidth="112.0" promptText="заполняем цифрами" />
+      <Label fx:id="lCsid" alignment="CENTER_RIGHT" layoutX="414.0" layoutY="493.0" prefHeight="17.0" prefWidth="221.0" text="Идентификатор объекта (CSID)" />
+      <Label fx:id="lDongle" alignment="CENTER_RIGHT" layoutX="67.0" layoutY="493.0" prefHeight="17.0" prefWidth="158.0" text="Номер ключа защиты" />
+      <TextField fx:id="tfDongle" layoutX="235.0" layoutY="489.0" prefHeight="25.0" prefWidth="177.0" promptText="заполняем цифрами" />
+      <Button fx:id="btnOk" layoutX="365.0" layoutY="538.0" mnemonicParsing="false" onAction="#createForm" prefHeight="25.0" prefWidth="158.0" text="ОК" />
+      <Button fx:id="btnCancel" layoutX="609.0" layoutY="538.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="158.0" text="Отмена" />
+      <Label fx:id="lMigration" alignment="CENTER_RIGHT" layoutX="48.0" layoutY="456.0" prefHeight="17.0" prefWidth="177.0" text="Миграция системы" />
+      <ComboBox fx:id="cbMigrSystemType" layoutX="235.0" layoutY="453.0" prefHeight="25.0" prefWidth="130.0" promptText="Выберите тип" />
+      <TextField fx:id="tfMigrSystemName" layoutX="557.0" layoutY="452.0" prefHeight="25.0" prefWidth="221.0" promptText="заполняем латиницей" />
+      <Label fx:id="lMigrSystemName" alignment="CENTER_RIGHT" layoutX="393.0" layoutY="456.0" prefHeight="17.0" prefWidth="158.0" text="Имя объекта/системы" />
+      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="33.0" prefHeight="17.0" prefWidth="158.0" text="Дебитор №*" />
+      <TextField fx:id="tfDebtorN" layoutX="235.0" layoutY="29.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем цифрами" />
+      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="67.0" prefHeight="17.0" prefWidth="158.0" text="Дебитор (англ)*" />
+      <TextField fx:id="tfDebtorEn" layoutX="235.0" layoutY="63.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем латиницей" />
+      <TextField fx:id="tfDebtorRu" layoutX="235.0" layoutY="97.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем кириллицей" />
+      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="101.0" prefHeight="17.0" prefWidth="158.0" text="Дебитор (рус)*" />
+      <TextArea fx:id="taAddressRu" layoutX="235.0" layoutY="320.0" prefHeight="53.0" prefWidth="544.0" promptText="заполняем кириллицей" />
+      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="321.0" prefHeight="17.0" prefWidth="158.0" text="Адрес (рус)*" />
+      <Button fx:id="btnLoadData" layoutX="67.0" layoutY="538.0" mnemonicParsing="false" onAction="#loadData" prefHeight="25.0" prefWidth="158.0" text="Загрузить данные" />
    </children>
 </AnchorPane>
