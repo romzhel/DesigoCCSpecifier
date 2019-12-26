@@ -14,7 +14,7 @@
       <TextField fx:id="tfCompany" layoutX="235.0" layoutY="165.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем латиницей" />
       <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="169.0" prefHeight="17.0" prefWidth="158.0" text="Заказчик*" />
       <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="204.0" prefHeight="17.0" prefWidth="158.0" text="Название проекта*" />
-      <TextField fx:id="tfProjectName" layoutX="235.0" layoutY="200.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем латиницей" />
+      <TextField fx:id="tfProjectName" layoutX="235.0" layoutY="200.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем латиницей, 40 символов" />
       <TextField fx:id="tfCustomer" layoutX="235.0" layoutY="233.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем кириллицей" />
       <Label alignment="CENTER_RIGHT" layoutX="4.0" layoutY="237.0" prefHeight="17.0" prefWidth="221.0" text="Конечный заказчик (лиц. согл.)*" />
       <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="268.0" prefHeight="17.0" prefWidth="158.0" text="Адрес (англ)*" />

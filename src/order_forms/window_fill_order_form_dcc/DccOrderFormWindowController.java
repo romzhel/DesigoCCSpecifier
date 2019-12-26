@@ -66,6 +66,12 @@ public class DccOrderFormWindowController implements Initializable {
         cbBuildingType.getItems().addAll(AppCore.getOrderFormBuildingTypes());
         cbMigrSystemType.getItems().addAll("Desigo Insight", "MM/MK8000");
         orderForm = OrderFormFactory.createDccOrderForm(this);
+
+        tfProjectName.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 40) {
+                tfProjectName.setText(oldValue);
+            }
+        });
     }
 
     public void createForm() {
@@ -88,7 +94,7 @@ public class DccOrderFormWindowController implements Initializable {
         this.featureSet = featureSet;
     }
 
-    public void loadData(){
+    public void loadData() {
         new DataLoaderFromExcelToUi(orderForm);
     }
 }
