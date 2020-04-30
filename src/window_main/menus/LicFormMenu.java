@@ -15,10 +15,8 @@ public class LicFormMenu {
         MenuItem dccEng = new MenuItem(SPACE + "Заказ инженерной лицензии" + SPACE);
         dccEng.setOnAction(event -> new EngOrderFormWindow(DCC_ENG));
 
-        MenuItem compSpec = new CompSpecSelectMenuItem("Составной расчёт", DccOrderFormWindow::new);
-
         FeatSetsMenu dccMenu = new FeatSetsMenu(SPACE + "Desigo CC" + SPACE, spec -> new DccOrderFormWindow(spec.getSpecification()),
-                new SeparatorMenuItem(), dccEng, new SeparatorMenuItem(), compSpec);
+                new SeparatorMenuItem(), dccEng);
 
         Menu xwMenu = new Menu(SPACE + "XWorks" + SPACE);
         MenuItem newXWlic = new MenuItem(SPACE + "Заказ новой инженерной лицензии" + SPACE);

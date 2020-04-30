@@ -3,8 +3,6 @@ package core;
 import additional_positions.Others;
 import dialogs.Dialogs;
 import excel.ExcelRow;
-import javafx.beans.property.ListProperty;
-import javafx.collections.ObservableList;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -32,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AppCore {
-    private static String buildInfo = "1.2.4 от 26.12.2019";
+    private static String buildInfo = "1.2.5 от 30.04.2020";
     private static InputStream appDataIS = AppCore.class.getResourceAsStream("/data.xlsx");
     private static Workbook workbook;
     private static Stage mainStage;
@@ -49,7 +47,6 @@ public class AppCore {
     private static Others others;
     private static VersionInfo versions;
     private static List<String> orderFormBuildingTypes = new ArrayList<>();
-    //private static ListProperty<Calculation> calculations = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     public static void init() {
         openResourceFile();
