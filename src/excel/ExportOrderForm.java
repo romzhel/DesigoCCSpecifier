@@ -12,6 +12,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import price_list.OrderPosition;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -71,6 +72,8 @@ public class ExportOrderForm {
                 FileOutputStream fos = new FileOutputStream(destinationFile);
                 workbook.write(fos);
                 fos.close();
+
+                Desktop.getDesktop().open(destinationFile);
             } catch (IOException e) {
                 e.printStackTrace();
             }

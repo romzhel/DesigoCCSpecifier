@@ -1,6 +1,5 @@
 package order_forms;
 
-import core.AppCore;
 import core.Calculator;
 import dialogs.Dialogs;
 import order_forms.window_fill_order_form_dcc.DccOrderFormWindowController;
@@ -147,7 +146,7 @@ public class OrderFormFactory {
     }
 
     public List<OrderFormItem> getUnicalItems() {
-        return Arrays.asList(ID, NEW_PROJECT, EXTENSION, MIGRATION, MIGRATED_SYSTEM, MIGRATED_SYSTEM_NAME, DONGLE,
-                BUILDING_TYPE);
+        return Arrays.asList(ID, NEW_PROJECT, EXTENSION, MIGRATION, MIGRATED_SYSTEM, MIGRATED_SYSTEM_NAME, DONGLE
+                /*,BUILDING_TYPE*/);
     }
 }
