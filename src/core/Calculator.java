@@ -1,9 +1,8 @@
 package core;
 
 import dialogs.Dialogs;
-import javafx.scene.control.RadioMenuItem;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import price_list.OrderPosition;
 import tables_data.feature_sets.FeatureSet;
 import tables_data.options.Option;
@@ -12,14 +11,17 @@ import tables_data.size.SizeItem;
 import java.util.ArrayList;
 
 public class Calculator {
-    private static OrderPosition EMPTY = null;
-    private static String STANDART_MIGRATION_SUFFIX = "-SSM";
-    private static String PRIVILEGED_MIGRATION_SUFFIX = "-PSM";
+    private static final OrderPosition EMPTY = null;
+    private static final String STANDARD_MIGRATION_SUFFIX = "-SSM";
+    private static final String PRIVILEGED_MIGRATION_SUFFIX = "-PSM";
     private String errorOrderPosition = "";
-    private boolean isSystemExtension;
-    private boolean isNewProject;
-    private String migrationSuffix = "";
+    private BooleanProperty calculationStatus;
+    private CalcType calcType;
 
+    public Calculator() {
+        calculationStatus = new SimpleBooleanProperty(false);
+        calcType = CalcType.NEW;
+    }
 
     public void getCosts() {
         for (FeatureSet featureSet : AppCore.getFeatureSets().getItems()) {
@@ -28,11 +30,11 @@ public class Calculator {
 
             if (isFeatureSetOverlimited(featureSet)) continue;
 
-            if (!isSystemExtension) addFeatureSetToSpec(featureSet);
+            if (calcType != CalcType.EXTENSION) addFeatureSetToSpec(featureSet);
             addPointPacketsToSpec(featureSet);
             addOptionsToSpec(featureSet);
 
-            if (!isSystemExtension) addSupplyFeatureSetPositions(featureSet);
+            if (calcType != CalcType.EXTENSION) addSupplyFeatureSetPositions(featureSet);
             if (featureSet.getSpecification().size() > 0) featureSet.addToSpecification(EMPTY);
             addSizeSupplyPositions(featureSet);
 
@@ -41,24 +43,26 @@ public class Calculator {
             featureSet.addToSpecification(EMPTY);
             calcSummaryCostBySpec(featureSet);
         }
+
+        resfreshCalculationStatus();
     }
 
     private boolean isFeatureSetOverlimited(FeatureSet featureSet) {
         featureSet.checkOverlimited();
 
-        if (!featureSet.isSupportPSM() && migrationSuffix.equals(PRIVILEGED_MIGRATION_SUFFIX))
+        if (!featureSet.isSupportPSM() && calcType == CalcType.MIGRATION_PSM)
             featureSet.setOverLimited(true);
-        if (!featureSet.isSupportSSM() && migrationSuffix.equals(STANDART_MIGRATION_SUFFIX))
+        if (!featureSet.isSupportSSM() && calcType == CalcType.MIGRATION_SSM)
             featureSet.setOverLimited(true);
 
-        if (!featureSet.isDisplayingForExtension() && isSystemExtension) featureSet.setOverLimited(true);
+        if (!featureSet.isDisplayingForExtension() && calcType == CalcType.EXTENSION) featureSet.setOverLimited(true);
 
         return featureSet.isOverLimited();
     }
 
     private void addFeatureSetToSpec(FeatureSet featureSet) {
         featureSet.addToSpecification(AppCore.getPriceList().getNewOrderPosition(
-                featureSet.getArticle().concat(migrationSuffix), featureSet.getAmount()));
+                featureSet.getArticle().concat(calcType.migrationSuffix), featureSet.getAmount()));
     }
 
     private void addPointPacketsToSpec(FeatureSet featureSet) {
@@ -67,9 +71,9 @@ public class Calculator {
             int includedPoints = featureSet.getPointsIncluded(sizeItemIndex++);
             int orderedPoints = sizeItem.getForOrder();
 
-            if (includedPoints == -1 || (includedPoints >= orderedPoints && !isSystemExtension)) continue;
+            if (includedPoints == -1 || (includedPoints >= orderedPoints && calcType != CalcType.EXTENSION)) continue;
 
-            int forOrderPoints = isSystemExtension ? orderedPoints : orderedPoints - includedPoints;
+            int forOrderPoints = calcType == CalcType.EXTENSION ? orderedPoints : orderedPoints - includedPoints;
             featureSet.addToSpecification(AppCore.getPointPackets().getSpecification(forOrderPoints, sizeItem.getPointType()));
         }
     }
@@ -134,29 +138,44 @@ public class Calculator {
         }
     }
 
-    public void setCalcMode(ToggleGroup flags) {
-        String id;
-        migrationSuffix = "";
-        for (Toggle toggle : flags.getToggles()) {
-            id = ((RadioMenuItem) toggle).getId();
-            if (id.equals("calcNewSystem")) isNewProject = toggle.isSelected();
-            if (id.equals("calcSystemExt")) isSystemExtension = toggle.isSelected();
-            if (id.equals("calcSSMMigr") && toggle.isSelected()) migrationSuffix = STANDART_MIGRATION_SUFFIX;
-            if (id.equals("calcPSMMigr") && toggle.isSelected()) migrationSuffix = PRIVILEGED_MIGRATION_SUFFIX;
-        }
-
+    public void setCalcMode(CalcType calcType) {
+        this.calcType = calcType;
         AppCore.refreshTables();
     }
 
-    public String getMigrationSuffix() {
-        return migrationSuffix;
+    public BooleanProperty calculationStatusProperty() {
+        return calculationStatus;
     }
 
-    public boolean isSystemExtension() {
-        return isSystemExtension;
+    public void resfreshCalculationStatus() {
+        calculationStatus.setValue(!calculationStatus.get());
     }
 
-    public boolean isNewProject() {
-        return isNewProject;
+    public CalcType getCalcType() {
+        return calcType;
+    }
+
+    public enum CalcType {
+        NEW("Новая система", ""),
+        EXTENSION("Расширение", ""),
+        MIGRATION_SSM("Миграция SSM", STANDARD_MIGRATION_SUFFIX),
+        MIGRATION_PSM("Миграция PSM", PRIVILEGED_MIGRATION_SUFFIX),
+        ENG("Инженерная лицензия с ключом", "");
+
+        private final String migrationSuffix;
+        private final String name;
+
+        CalcType(String name, String migrationSuffix) {
+            this.migrationSuffix = migrationSuffix;
+            this.name = name;
+        }
+
+        public String getMigrationSuffix() {
+            return migrationSuffix;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 }

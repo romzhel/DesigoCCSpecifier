@@ -64,3 +64,25 @@
 .red .check-box:selected .mark {
     -fx-background-color: red;
 }
+
+.my_header .column-header {
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: transparent #a9a9a9 -fx-box-border transparent;
+}
+
+.my_header .cell {
+    -fx-label-padding: 0 5 0 5;
+}
+
+.my_column .column-header {
+    -fx-border-width: 0 1 1 0;
+    -fx-border-color: transparent #a9a9a9 -fx-box-border transparent;
+}
+
+.my_column .cell {
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: transparent #a9a9a9 transparent transparent;
+    -fx-padding: 0 -1 0 0;
+    -fx-label-padding: 0 5 0 5;
+}
+

@@ -1,6 +1,7 @@
 package tables_data.feature_sets;
 
 import core.AppCore;
+import core.Calculator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.apache.poi.ss.usermodel.Row;
@@ -230,7 +231,7 @@ public class FeatureSet {
 
             if (sizeItem.getForOrder() > 0) {
                 boolean isSizeExceeded = sizeItem.getForOrder() > getPointMaximum(index) && getPointMaximum(index) != 0;
-                boolean isExtensionOverLimited = AppCore.getCalculator().isSystemExtension() &&
+                boolean isExtensionOverLimited = AppCore.getCalculator().getCalcType() == Calculator.CalcType.EXTENSION &&
                         getPointMaximum(index) != 0 &&
                         (sizeItem.getForOrder() > (getPointMaximum(index) - getPointsIncluded(index)));
 

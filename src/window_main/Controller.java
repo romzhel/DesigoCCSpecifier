@@ -3,8 +3,6 @@ package window_main;
 import core.AppCore;
 import dialogs.Dialogs;
 import excel.ExportSpecToExcel;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -13,20 +11,20 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import order_forms.window_fill_order_form_dcc.DccOrderFormWindow;
-import order_forms.window_fill_order_form_eng.EngOrderFormWindow;
 import tables_data.feature_sets.FeatureSet;
 import tables_data.feature_sets.FeatureSetsTable;
 import tables_data.options.Option;
 import tables_data.options.OptionsTable;
 import tables_data.size.SizeItem;
 import tables_data.size.SizeTable;
+import window_main.menus.CalcTypeMenu;
+import window_main.menus.FileMenu;
+import window_main.menus.LicFormMenu;
 
 import java.awt.*;
 import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static order_forms.OrderFormType.*;
 
 public class Controller implements Initializable {
     public static final String DESCRIPTION_COLUMN_NAME = "Описание";
@@ -38,7 +36,6 @@ public class Controller implements Initializable {
     public static final String WEB_PAGE_URI = "http://www.buildingtechnologies.siemens.ru/products/DesigoCC/desigo_cc_features/";
     public static final String CLOUD_URI = "https://cloud.mail.ru/public/KHua/8pmtkDn2S";
     public static final String MANUAL_URI = "https://cloud.mail.ru/public/GLEx/X1dDhoU9u";
-    private ToggleGroup calcMenuGroup;
 
     @FXML
     TableView<SizeItem> tvSize;
@@ -49,15 +46,15 @@ public class Controller implements Initializable {
     @FXML
     Accordion accrd;
     @FXML
-    RadioMenuItem calcNewSystem;
+    Menu mnuCalcType;
     @FXML
-    RadioMenuItem calcSystemExt;
+    Menu mnuLicForms;
     @FXML
-    RadioMenuItem calcSSMMigr;
-    @FXML
-    RadioMenuItem calcPSMMigr;
+    Menu mnuCompCalcs;
     @FXML
     Menu additionalComponents;
+    @FXML
+    Menu mnuFile;
     @FXML
     Label lDCCVersionInfo;
     @FXML
@@ -86,20 +83,9 @@ public class Controller implements Initializable {
     }
 
     private void initMenu() {
-        calcMenuGroup = new ToggleGroup();
-        calcNewSystem.setToggleGroup(calcMenuGroup);
-        calcSystemExt.setToggleGroup(calcMenuGroup);
-        calcSSMMigr.setToggleGroup(calcMenuGroup);
-        calcPSMMigr.setToggleGroup(calcMenuGroup);
-
-        calcMenuGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                if (newValue != null) AppCore.getCalculator().setCalcMode(calcMenuGroup);
-            }
-        });
-
-        calcNewSystem.setSelected(true);
+        new CalcTypeMenu(mnuCalcType);
+        new LicFormMenu(mnuLicForms);
+        new FileMenu(mnuFile);
     }
 
     private void initTables() {
@@ -153,13 +139,9 @@ public class Controller implements Initializable {
         }
     }
 
-    public void useSpecification() {
+    /*public void useSpecification() {
         AppCore.extractPointsFromSpec();
-    }
-
-    public void resetCalcData() {
-        AppCore.orderDetails();
-    }
+    }*/
 
     public void infoAbout() {
         backgroundPane.setVisible(true);
@@ -212,23 +194,11 @@ public class Controller implements Initializable {
         FeatureSet selectedFs = tvSpec.getSelectionModel().getSelectedItem();
         if (selectedFs != null) {
             if (!selectedFs.isOverLimited()) {
-                new DccOrderFormWindow(tvSpec.getSelectionModel().getSelectedItem());
+                new DccOrderFormWindow(tvSpec.getSelectionModel().getSelectedItem().getSpecification());
             } else {
                 new Dialogs().showMessage("Экспорт спецификации в Excel", "Данный базовый пакет не может быть " +
                         "использован из-за превышения его возможностей");
             }
         }
-    }
-
-    public void fillDccEngForm() {
-        new EngOrderFormWindow(DCC_ENG);
-    }
-
-    public void fillXwNewForm() {
-        new EngOrderFormWindow(XWORKS_ENG_NEW);
-    }
-
-    public void fillXwExtForm() {
-        new EngOrderFormWindow(XWORKS_ENG_EXT);
     }
 }

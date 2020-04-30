@@ -9,19 +9,28 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import price_list.OrderPosition;
+import tables_data.feature_sets.FeatureSet;
 
 import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ExportSpecToExcel {
 
-    public ExportSpecToExcel(ArrayList<OrderPosition> specification, String fileName) {
-        boolean fileNeedToBeOpened = fileName == null ? true : false;
+    public ExportSpecToExcel(FeatureSet fs) {
+        export(fs.getSpecification(), null);
+    }
+
+    public ExportSpecToExcel(List<OrderPosition> specification, String fileName) {
+        export(specification, fileName);
+    }
+
+    private void export(List<OrderPosition> specification, String fileName) {
+        boolean fileNeedToBeOpened = fileName == null;
         File file = null;
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Desigo CC specification");
@@ -96,18 +105,16 @@ public class ExportSpecToExcel {
         SimpleDateFormat template = null;
         FileOutputStream outFile = null;
         try {
-            if (fileName == null) {
+            if (fileName == null || fileName.isEmpty()) {
                 template = new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss");
-                if ((fileName = new Dialogs().textInput("Сохранение файла", "Пожалуйста, " +
-                        "введите название файла", "DesigoCC_" + template.format(new Date()))) != null) {
-
-                    if (fileName.length() > 0) fileName.replaceAll("[<>:\"\\/|?*]", "_");
-                    else fileName = "DesigoCC_" + template.format(new Date());
-
-                    fileName = fileName.concat(".xls");
-                }
+                file = new Dialogs().saveFile("DesigoCC_" + template.format(new Date()));
             }
-            file = new File(fileName);
+
+            if (file == null) {
+                assert fileName != null;
+                file = new File(fileName.replaceAll("[<>:\"/|?*]", "_"));
+
+            }
 
             outFile = new FileOutputStream(file);
             workbook.write(outFile);
@@ -116,12 +123,11 @@ public class ExportSpecToExcel {
 
             workbook.close();
             outFile.close();
-
         } catch (Exception e) {
             System.out.println("Something wrong.... " + e.getMessage());
         } finally {
             try {
-                if (workbook != null) workbook.close();
+                workbook.close();
                 if (outFile != null) outFile.close();
             } catch (IOException eio) {
                 System.out.println("error of book or outFile closing");

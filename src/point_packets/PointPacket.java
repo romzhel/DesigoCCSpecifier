@@ -42,7 +42,7 @@ public class PointPacket {
 
             if (packet.forOrder != 0) {
                 result.add(AppCore.getPriceList().getNewOrderPosition(
-                        packet.article.concat(AppCore.getCalculator().getMigrationSuffix()),
+                        packet.article.concat(AppCore.getCalculator().getCalcType().getMigrationSuffix()),
                         packet.forOrder));
             }
         }

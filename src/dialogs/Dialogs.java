@@ -44,7 +44,7 @@ public class Dialogs {
     public File saveFile(String fileName) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Выберите место сохранения файла");
-        FileChooser.ExtensionFilter excelFilter = new FileChooser.ExtensionFilter("Все файлы", "*.*");//Расширение
+        FileChooser.ExtensionFilter excelFilter = new FileChooser.ExtensionFilter("Файлы Excel", "*.xls");//Расширение
         fileChooser.getExtensionFilters().add(excelFilter);
         fileChooser.setInitialFileName(fileName);
         return fileChooser.showSaveDialog(AppCore.getMainStage());

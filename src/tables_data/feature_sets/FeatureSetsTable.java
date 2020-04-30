@@ -1,6 +1,7 @@
 package tables_data.feature_sets;
 
 import core.AppCore;
+import core.Calculator;
 import core.Tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -56,9 +57,6 @@ public class FeatureSetsTable implements Tables {
             }
         });
 
-//        costColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-
-        costColumn.setStyle("-fx-alignment: CENTER");
         costColumn.setPrefWidth(COST_COLUMN_WIDTH);
 
         costColumn.setCellFactory(column -> {                           // ------ цвет текста спецификации-------------
@@ -79,9 +77,8 @@ public class FeatureSetsTable implements Tables {
                         if (fs.isOverLimited()) {
                             setText("не применимо");
                             setTextFill(Color.RED); //The text in red
-                            setStyle("-fx-font-weight: bold; -fx-alignment: CENTER;");
                         } else {
-                            if (AppCore.getCalculator().isSystemExtension()) {
+                            if (AppCore.getCalculator().getCalcType() == Calculator.CalcType.EXTENSION) {
                                 if (fs.getDescriptionEn().contains("Standart")) setTextFill(Color.GREEN);
                                 else setTextFill(Color.ORANGE);
                             } else {
@@ -89,8 +86,9 @@ public class FeatureSetsTable implements Tables {
                             }
 
                             setText(item); //Put the String data in the cell
-                            setStyle("-fx-font-weight: bold; -fx-alignment: CENTER;");
                         }
+
+                        setStyle(getStyle().concat(" -fx-alignment: CENTER; -fx-font-weight: bold;"));
                     }
                 }
             };

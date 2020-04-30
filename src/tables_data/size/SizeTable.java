@@ -1,6 +1,7 @@
 package tables_data.size;
 
 import core.AppCore;
+import core.Calculator;
 import core.Tables;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -8,20 +9,22 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import tables_data.feature_sets.FeatureSet;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import static javafx.scene.control.cell.TextFieldTableCell.forTableColumn;
 import static tables_data.size.SizeItem.NOT_ACCESSIBLE;
 import static tables_data.size.SizeItem.NOT_LIMITED;
 import static window_main.Controller.*;
 
 public class SizeTable implements Tables {
-    TableView<SizeItem> tableView;
+    private static final String COL_STYLE = " -fx-border-width: 0 1 0 0; -fx-border-color: #a9a9a9;";
+    private TableView<SizeItem> tableView;
 
     public SizeTable(TableView<SizeItem> tableView) {
         this.tableView = tableView;
@@ -42,7 +45,7 @@ public class SizeTable implements Tables {
         TableColumn<SizeItem, Integer> inputCol = new TableColumn<>(FOR_ORDER_COLUMN_NAME);
         inputCol.setCellValueFactory(new PropertyValueFactory<>("forOrder"));
 
-        inputCol.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Integer>() {
+        StringConverter<Integer> converter = new StringConverter<Integer>() {
             @Override
             public String toString(Integer object) {
                 return String.format("%,d", object);
@@ -50,29 +53,30 @@ public class SizeTable implements Tables {
 
             @Override
             public Integer fromString(String string) {
-
                 int result = 0;
-
                 try {
-                    result = Integer.parseInt(string);
+                    result = Integer.parseInt(string.replaceAll("[\\h\\s]", ""));
                 } catch (NumberFormatException e) {
-                    System.out.println("invalid points number");
+                    System.out.println("invalid points number: " + string);
                 }
-
                 return result;
             }
-        }));
+        };
 
-        inputCol.setOnEditCommit(event -> {
-            event.getRowValue().setForOrder(event.getNewValue());
-
-//            Calculator.calc();
-
-
-            AppCore.refreshTables();
+        inputCol.setCellFactory(new Callback<TableColumn<SizeItem, Integer>, TableCell<SizeItem, Integer>>() {
+            @Override
+            public TableCell<SizeItem, Integer> call(TableColumn<SizeItem, Integer> column) {
+                return new EditCell<SizeItem, Integer>(converter) {
+                    @Override
+                    public void commitEdit(Integer item) {
+                        super.commitEdit(item);
+                        AppCore.refreshTables();
+                    }
+                };
+            }
         });
 
-        inputCol.setStyle("-fx-alignment: CENTER");
+        inputCol.setStyle(COL_STYLE.concat(" -fx-alignment: center;"));
         inputCol.setEditable(true);
         inputCol.setPrefWidth(FOR_ORDER_COLUMN_WIDTH);
         tableView.getColumns().add(inputCol);
@@ -81,14 +85,15 @@ public class SizeTable implements Tables {
     private void initDescriptionColumn(TableView<SizeItem> tableView) {
         TableColumn<SizeItem, String> descriptionCol = new TableColumn<>(DESCRIPTION_COLUMN_NAME);
         descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-        descriptionCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        descriptionCol.setCellFactory(forTableColumn());
         descriptionCol.setPrefWidth(DESCRIPTION_COLUMN_WIDTH);
         descriptionCol.setEditable(false);
+        descriptionCol.setStyle(COL_STYLE);
         tableView.getColumns().add(descriptionCol);
     }
 
     public void addFSColumns(FeatureSet featureSet) {
-        ArrayList<TableColumn> FSColumns = new ArrayList<>();
+        List<TableColumn> FSColumns = new ArrayList<>();
 
         FSColumns.add(new TableColumn<FeatureSet, Integer>(featureSet.getArticle()));
         FSColumns.add(new TableColumn<SizeItem, Integer>("Включ."));
@@ -163,24 +168,25 @@ public class SizeTable implements Tables {
                             /*if (featureSet.isTotalLimited(sizeItem.getPointType()) *//*&& AppCore.getSize().isTotallyOverLimited(featureSet.getTotalLimit())*//*) {
                                 setTextFill(Color.RED);
                                 setStyle("-fx-font-weight: normal; -fx-alignment: CENTER;");
-                            } else*/ if (sizeItem.getForOrder() <= featureSet.getPointsIncluded(index)) {
+                            } else*/
+                            if (sizeItem.getForOrder() <= featureSet.getPointsIncluded(index)) {
                                 setTextFill(Color.GREEN);
-                                setStyle("-fx-font-weight: bold; -fx-alignment: CENTER;");
+                                setStyle("-fx-font-weight: bold;");
                             } else if (featureSet.getPointsIncluded(index) == NOT_ACCESSIBLE) {
                                 setTextFill(Color.RED);
-                                setStyle("-fx-font-weight: bold; -fx-alignment: CENTER;");
+                                setStyle("-fx-font-weight: bold;");
                             } else if (featureSet.getPointMaximum(index) > 0 && featureSet.getPointMaximum(index) < sizeItem.getForOrder()) {
                                 setTextFill(Color.RED);
-                                setStyle("-fx-font-weight: normal; -fx-alignment: CENTER;");
+                                setStyle("-fx-font-weight: normal;");
                             } else {
                                 setTextFill(Color.GREEN);
-                                setStyle("-fx-font-weight: normal; -fx-alignment: CENTER;");
+                                setStyle("-fx-font-weight: normal;");
                             }
 //
                         } else {
                             setTextFill(Color.BLACK);
-                            setStyle("-fx-alignment: CENTER;");
                         }
+                        setStyle(getStyle().concat(" -fx-alignment: CENTER; "));
                     }
                 }
             };
@@ -195,7 +201,7 @@ public class SizeTable implements Tables {
 
                     if (item == null || empty) { //If the cell is empty
                         setText(null);
-                        setStyle("");
+                        setStyle(COL_STYLE);
                     } else { //If the cell is not empty
 
                         setText(item); //Put the String data in the cell
@@ -209,26 +215,26 @@ public class SizeTable implements Tables {
                                     featureSet.getPointMaximum(index) != 0;
                             boolean isTotalOverLimited = /*featureSet.isTotalLimited(sizeItem.getPointType()) &&
                                     AppCore.getSize().isTotallyOverLimited(featureSet.getTotalLimit())*/ false;
-                            boolean isExtensionOverLimited = AppCore.getCalculator().isSystemExtension() &&
+                            boolean isExtensionOverLimited = AppCore.getCalculator().getCalcType() == Calculator.CalcType.EXTENSION &&
                                     featureSet.getPointMaximum(index) != 0 &&
                                     (sizeItem.getForOrder() > (featureSet.getPointMaximum(index) - featureSet.getPointsIncluded(index)));
 
                             if (isSizeExceeded || isTotalOverLimited || isExtensionOverLimited) {
                                 setTextFill(Color.RED); //The text in red
-                                setStyle("-fx-font-weight: bold; -fx-alignment: CENTER;");
+                                setStyle("-fx-font-weight: bold;");
                                 featureSet.setOverLimited(featureSet.isOverLimited() | true);
                             } else if (sizeItem.getForOrder() > featureSet.getPointsIncluded(index)) {
                                 setTextFill(Color.GREEN);
-                                setStyle("-fx-font-weight: bold; -fx-alignment: CENTER;");
+                                setStyle("-fx-font-weight: bold;");
                             } else {
                                 setTextFill(Color.GREEN);
-                                setStyle("-fx-font-weight: normal; -fx-alignment: CENTER;");
+                                setStyle("-fx-font-weight: normal;");
                             }
 //
                         } else {
                             setTextFill(Color.BLACK);
-                            setStyle("-fx-alignment: CENTER;");
                         }
+                        setStyle(getStyle().concat(COL_STYLE).concat(" -fx-alignment: center;"));
                     }
                 }
             };
@@ -240,10 +246,9 @@ public class SizeTable implements Tables {
         FSColumns.get(2).setSortable(false);
         FSColumns.get(0).setPrefWidth(FEATURE_SET_COLUMN_WIDTH);
         FSColumns.get(1).setPrefWidth(FEATURE_SET_COLUMN_WIDTH / 2);
-        FSColumns.get(1).setStyle("-fx-alignment: CENTER");
+        FSColumns.get(1).setStyle("-fx-alignment: CENTER; ");
 
         FSColumns.get(2).setPrefWidth(FEATURE_SET_COLUMN_WIDTH / 2);
-        FSColumns.get(2).setStyle("-fx-alignment: CENTER");
 
         tableView.getColumns().add(FSColumns.get(0));
     }

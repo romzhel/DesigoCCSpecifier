@@ -6,27 +6,30 @@ import order_forms.OrderFormFactory;
 import order_forms.OrderFormItem;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import price_list.OrderPosition;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ExportOrderForm {
     private final String PASSWORD = "FiGVam";
     private XSSFWorkbook workbook;
 
-    public ExportOrderForm(OrderFormFactory orderForm, ArrayList<OrderPosition> specification, String templateFile) {
+    public ExportOrderForm(OrderFormFactory orderForm, List<OrderPosition> specification, String templateFile) {
         getTemplate(templateFile);
         fillSheet(orderForm, specification);
         saveToExcelFile(orderForm);
         closeWorkbook();
     }
 
-    private void fillSheet(OrderFormFactory orderForm, ArrayList<OrderPosition> specification) {
+    private void fillSheet(OrderFormFactory orderForm, List<OrderPosition> specification) {
         XSSFSheet sheet = workbook.getSheetAt(0);
 
         CellDecorator cellDecorator = new CellDecorator(sheet);

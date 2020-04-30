@@ -3,10 +3,15 @@ package core;
 import additional_positions.Others;
 import dialogs.Dialogs;
 import excel.ExcelRow;
+import javafx.beans.property.ListProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import point_matrix.PointMatrix;
 import point_packets.PointPackets;
 import price_list.PriceList;
@@ -24,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class AppCore {
     private static String buildInfo = "1.2.4 от 26.12.2019";
@@ -42,7 +48,8 @@ public class AppCore {
     private static SpecTables specTables;
     private static Others others;
     private static VersionInfo versions;
-    private static ArrayList<String> orderFormBuildingTypes = new ArrayList<>();
+    private static List<String> orderFormBuildingTypes = new ArrayList<>();
+    //private static ListProperty<Calculation> calculations = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     public static void init() {
         openResourceFile();
@@ -67,7 +74,6 @@ public class AppCore {
     private static void getBuildingTypes() {
         Sheet sheet = workbook.getSheet("building_types");
         Row row;
-        Cell cell;
         int rowIndex = 0;
 
         while ((row = sheet.getRow(rowIndex++)) != null) {
@@ -237,7 +243,7 @@ public class AppCore {
         return buildInfo;
     }
 
-    public static ArrayList<String> getOrderFormBuildingTypes() {
+    public static List<String> getOrderFormBuildingTypes() {
         return orderFormBuildingTypes;
     }
 }

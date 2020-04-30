@@ -50,12 +50,6 @@ public class OptionsTable implements Tables {
 
             booleanProperty.addListener((observable, oldValue, newValue) -> { //---- изменили состояние флажка -------
                 op.setOrdered(newValue);
-
-//                Calculator.setFeatureSetsisOrdered(optNum, newValue);
-//                Calculator.calc();
-
-
-//                tableView.refresh();
                 AppCore.refreshTables();
             });
 
@@ -74,8 +68,6 @@ public class OptionsTable implements Tables {
     public void addFSColumns(FeatureSet featureSet) {
         TableColumn<Option, Boolean> tableColumn = new TableColumn<Option, Boolean>(featureSet.getArticle());
         tableColumn.setPrefWidth(Controller.FEATURE_SET_COLUMN_WIDTH);
-
-//        tableColumn.getStyleClass().add("changed");
 
         tableColumn.setCellValueFactory(param -> {
             Option option = param.getValue();
@@ -105,28 +97,17 @@ public class OptionsTable implements Tables {
                     boolean isOrdered = AppCore.getOptions().getItems().get(index).isOrdered();
 
                     int orderableAccessibility = featureSet.getOrderAccessibility(index);
-//
-//                        cell.setStyle("-fx-background-color: transparent;");
-
                     cell.getStyleClass().add("grey_by-default");
 
                     if (orderableAccessibility == Option.ORDERABLE) { //
-//                            cell.setStyle("-fx-background-color: #efedfd;");
-//                            cell.getStyleClass().clear();
                         cell.getStyleClass().add("green");
                     }
 
                     if (isOrdered && (orderableAccessibility == Option.ORDERABLE || orderableAccessibility == Option.INCLUDED)) {
-//                            cell.setStyle("-fx-background-color: #e4fad6;");
-//                            cell.getStyleClass().clear();
                         cell.getStyleClass().add("green");
                     } else if (isOrdered && orderableAccessibility == Option.NOT_ACCESSIBLE) {
-//                            cell.setStyle("-fx-background-color: #fadbd6;");
-//                            cell.getStyleClass().clear();
                         cell.getStyleClass().add("red");
-//                            EvaluationSpec.tableResresh();
                         featureSet.setOverLimited(true);
-
                     }
                 }
             });

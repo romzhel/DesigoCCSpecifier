@@ -20,8 +20,7 @@ public class EngOrderFormWindow {
         Stage stage = new Stage();
         try {
             stage.setScene(new Scene(loader.load()));
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

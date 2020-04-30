@@ -8,13 +8,14 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import order_forms.DataLoaderFromExcelToUi;
 import order_forms.OrderFormFactory;
-import tables_data.feature_sets.FeatureSet;
+import price_list.OrderPosition;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DccOrderFormWindowController implements Initializable {
-    private FeatureSet featureSet;
+    private List<OrderPosition> spec;
     @FXML
     public TextField tfDebtorN;
     @FXML
@@ -81,7 +82,7 @@ public class DccOrderFormWindowController implements Initializable {
             return;
         }
 
-        new ExportOrderForm(orderForm, featureSet.getSpecification(), "/dcc_licences_order_form.xlsx");
+        new ExportOrderForm(orderForm, spec, "/dcc_licences_order_form.xlsx");
 
         close();
     }
@@ -90,8 +91,8 @@ public class DccOrderFormWindowController implements Initializable {
         ((Stage) btnCancel.getScene().getWindow()).close();
     }
 
-    public void setFeatureSet(FeatureSet featureSet) {
-        this.featureSet = featureSet;
+    public void setSpec(List<OrderPosition> spec) {
+        this.spec = spec;
     }
 
     public void loadData() {

@@ -1,6 +1,7 @@
 package order_forms;
 
 import core.AppCore;
+import core.Calculator;
 import dialogs.Dialogs;
 import order_forms.window_fill_order_form_dcc.DccOrderFormWindowController;
 import order_forms.window_fill_order_form_eng.EngOrderFormWindowController;
@@ -54,8 +55,8 @@ public class OrderFormFactory {
 
     public static OrderFormFactory createDccOrderForm(DccOrderFormWindowController controller) {
 
-        boolean isNewProject = AppCore.getCalculator().isNewProject();
-        boolean isMigration = !AppCore.getCalculator().getMigrationSuffix().isEmpty();
+        boolean isNewProject = AppCore.getCalculator().getCalcType() == Calculator.CalcType.NEW;
+        boolean isMigration = !AppCore.getCalculator().getCalcType().getMigrationSuffix().isEmpty();
         OrderFormFactory orderForm = new OrderFormFactory();
         orderForm.formType = DCC;
         orderForm.DEBTOR_NUMBER = create().setControl(controller.tfDebtorN).setCheckType(CheckType.DIGITS).setPosition("C13");
