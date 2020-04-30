@@ -1,6 +1,5 @@
 package order_forms.window_fill_order_form_eng;
 
-import core.AppCore;
 import excel.ExportOrderForm;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,6 +10,7 @@ import javafx.stage.Stage;
 import order_forms.DataLoaderFromExcelToUi;
 import order_forms.OrderFormFactory;
 import price_list.OrderPosition;
+import price_list.PriceList;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -54,13 +54,13 @@ public class EngOrderFormWindowController implements Initializable {
 
         switch (EngOrderFormWindow.getType()) {
             case DCC_ENG:
-                orderPositions.add(AppCore.getPriceList().getNewOrderPosition("CCA-ENG", amount));
+                orderPositions.add(PriceList.getInstance().getNewOrderPosition("CCA-ENG", amount));
                 break;
             case XWORKS_ENG_NEW:
-                orderPositions.add(AppCore.getPriceList().getNewOrderPosition("CTX-LEN.5M-NEW", amount));
+                orderPositions.add(PriceList.getInstance().getNewOrderPosition("CTX-LEN.5M-NEW", amount));
                 break;
             case XWORKS_ENG_EXT:
-                orderPositions.add(AppCore.getPriceList().getNewOrderPosition("CTX-LEN.5M-EXT", amount));
+                orderPositions.add(PriceList.getInstance().getNewOrderPosition("CTX-LEN.5M-EXT", amount));
         }
 
         new ExportOrderForm(orderForm, orderPositions, "/eng_licences_order_form.xlsx");

@@ -1,21 +1,32 @@
 package point_packets;
 
 
-import core.AppCore;
 import price_list.OrderPosition;
 import price_list.PriceList;
+import tables_data.size.Size;
 import tables_data.size.SizeItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PointPackets {
-    private ArrayList<PointPacket> pointPackets;
+    private static PointPackets instance;
+    private List<PointPacket> pointPackets;
 
-    public PointPackets(PriceList priceList) {
+    private PointPackets() {
         pointPackets = new ArrayList<>();
+    }
 
+    public static PointPackets getInstance() {
+        if (instance == null) {
+            instance = new PointPackets();
+        }
+        return instance;
+    }
+
+    public void init(PriceList priceList) {
         String lookingText;
-        for (SizeItem sizeItem : AppCore.getSize().getItems()) {
+        for (SizeItem sizeItem : Size.getInstance().getItems()) {
             lookingText = sizeItem.getArticlePart();
 
             if (lookingText.isEmpty() || sizeItem.getPointType().isEmpty()) continue;

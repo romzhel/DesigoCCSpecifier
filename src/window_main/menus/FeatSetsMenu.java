@@ -1,9 +1,10 @@
 package window_main.menus;
 
-import core.AppCore;
+import core.Calculator;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import tables_data.feature_sets.FeatureSet;
+import tables_data.feature_sets.FeatureSets;
 
 import java.util.function.Consumer;
 
@@ -13,9 +14,9 @@ public class FeatSetsMenu extends Menu {
     public FeatSetsMenu(String text, Consumer<FeatureSet> action, MenuItem... menuItems) {
         super(text);
 
-        AppCore.getCalculator().calculationStatusProperty().addListener((observable, oldValue, newValue) -> {
+        Calculator.getInstance().calculationStatusProperty().addListener((observable, oldValue, newValue) -> {
             getItems().clear();
-            for (FeatureSet fs : AppCore.getFeatureSets().getItems()) {
+            for (FeatureSet fs : FeatureSets.getInstance().getItems()) {
                 if (!fs.isOverLimited()) {
                     MenuItem menuItem = new MenuItem(String.format("%s [%,.2f EUR]%s", SPACE + fs.getDescriptionEn(),
                             fs.getSummaryСost(), SPACE));
@@ -26,6 +27,6 @@ public class FeatSetsMenu extends Menu {
 
             getItems().addAll(menuItems);
         });
-        AppCore.getCalculator().calculationStatusProperty().set(!AppCore.getCalculator().calculationStatusProperty().get());
+        Calculator.getInstance().resfreshCalculationStatus();
     }
 }

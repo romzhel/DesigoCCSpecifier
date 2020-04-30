@@ -1,12 +1,13 @@
 package tables_data.feature_sets;
 
-import core.AppCore;
 import core.Calculator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.apache.poi.ss.usermodel.Row;
 import price_list.OrderPosition;
 import tables_data.options.Option;
+import tables_data.options.Options;
+import tables_data.size.Size;
 import tables_data.size.SizeItem;
 
 import java.util.ArrayList;
@@ -217,8 +218,8 @@ public class FeatureSet {
     }
 
     public void checkOverlimited() {
-        for (Option option : AppCore.getOptions().getItems()) {
-            int optionIndex = AppCore.getOptions().getItems().indexOf(option);
+        for (Option option : Options.getInstance().getItems()) {
+            int optionIndex = Options.getInstance().getItems().indexOf(option);
             int orderableAccessibility = optionsAccessibilities.get(optionIndex);
 
             if (option.isOrdered() && orderableAccessibility == Option.NOT_ACCESSIBLE) {
@@ -226,12 +227,12 @@ public class FeatureSet {
             }
         }
 
-        for (SizeItem sizeItem : AppCore.getSize().getItems()) {
-            int index = AppCore.getSize().getItems().indexOf(sizeItem);
+        for (SizeItem sizeItem : Size.getInstance().getItems()) {
+            int index = Size.getInstance().getItems().indexOf(sizeItem);
 
             if (sizeItem.getForOrder() > 0) {
                 boolean isSizeExceeded = sizeItem.getForOrder() > getPointMaximum(index) && getPointMaximum(index) != 0;
-                boolean isExtensionOverLimited = AppCore.getCalculator().getCalcType() == Calculator.CalcType.EXTENSION &&
+                boolean isExtensionOverLimited = Calculator.getInstance().isCalcTypeEquals(Calculator.CalcType.EXTENSION) &&
                         getPointMaximum(index) != 0 &&
                         (sizeItem.getForOrder() > (getPointMaximum(index) - getPointsIncluded(index)));
 
@@ -241,7 +242,7 @@ public class FeatureSet {
             }
         }
 
-        amount = AppCore.getSize().getAmount(totalLimit);
+        amount = Size.getInstance().getAmount(totalLimit);
     }
 
     public int getAmount() {

@@ -1,19 +1,30 @@
 package tables_data.size;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import tables_data.feature_sets.FeatureSet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Size {
     private static final String SHEET_NAME = "size";
-    private ObservableList<SizeItem> size;
+    private static Size instance;
+    private List<SizeItem> size;
 
-    public Size(Workbook workbook) {
-        size = FXCollections.observableArrayList();
+    private Size() {
+        size = new ArrayList<>();
+    }
 
+    public static Size getInstance() {
+        if (instance == null) {
+            instance = new Size();
+        }
+        return instance;
+    }
+
+    public void init(Workbook workbook) {
         Sheet sheet = workbook.getSheet(SHEET_NAME);
         Row row = null;
         int rowIndex = 0;
@@ -23,7 +34,7 @@ public class Size {
         }
     }
 
-    public ObservableList<SizeItem> getItems() {
+    public List<SizeItem> getItems() {
         return size;
     }
 
@@ -32,12 +43,13 @@ public class Size {
         int totalPoints = 0;
 
         for (SizeItem si : size) {
-            if (totalLimit.getPointsWithLimitation().indexOf(si.getPointType()) >= 0) {
+            if (totalLimit.getPointsWithLimitation().contains(si.getPointType())) {
                 totalPoints += si.getForOrder();
             }
         }
 
-        int amount = totalPoints % totalLimit.getTotalPoints() > 0 ? totalPoints / totalLimit.getTotalPoints() + 1 :
+        int amount = totalPoints % totalLimit.getTotalPoints() > 0 ?
+                totalPoints / totalLimit.getTotalPoints() + 1 :
                 totalPoints / totalLimit.getTotalPoints();
 
         return Math.max(1, amount);

@@ -13,6 +13,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.ScrollEvent;
 import javafx.util.Callback;
 import tables_data.feature_sets.FeatureSet;
+import tables_data.feature_sets.FeatureSets;
 import window_main.Controller;
 
 public class OptionsTable implements Tables {
@@ -25,11 +26,11 @@ public class OptionsTable implements Tables {
         initDescriptionColumn();
         initOrderColumn();
 
-        for (FeatureSet fs : AppCore.getFeatureSets().getItems()) {
+        for (FeatureSet fs : FeatureSets.getInstance().getItems()) {
             addFSColumns(fs);
         }
 
-        tableView.getItems().addAll(AppCore.getOptions().getItems());
+        tableView.getItems().addAll(Options.getInstance().getItems());
         tableView.setEditable(true);
     }
 
@@ -71,7 +72,7 @@ public class OptionsTable implements Tables {
 
         tableColumn.setCellValueFactory(param -> {
             Option option = param.getValue();
-            int index = AppCore.getOptions().getItems().indexOf(option);
+            int index = Options.getInstance().getItems().indexOf(option);
 
             boolean checked = featureSet.getOrderAccessibility(index) == Option.INCLUDED ||
                     option.isOrdered() && featureSet.getOrderAccessibility(index) == Option.ORDERABLE;
@@ -94,7 +95,7 @@ public class OptionsTable implements Tables {
                 } else if (row.getIndex() >= 0) {
                     int index = cell.getTableRow().getIndex();
 
-                    boolean isOrdered = AppCore.getOptions().getItems().get(index).isOrdered();
+                    boolean isOrdered = Options.getInstance().getItems().get(index).isOrdered();
 
                     int orderableAccessibility = featureSet.getOrderAccessibility(index);
                     cell.getStyleClass().add("grey_by-default");

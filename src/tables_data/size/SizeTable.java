@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import tables_data.feature_sets.FeatureSet;
+import tables_data.feature_sets.FeatureSets;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +34,11 @@ public class SizeTable implements Tables {
         initDescriptionColumn(tableView);
         initOrderColumn(tableView);
 
-        for (FeatureSet fs : AppCore.getFeatureSets().getItems()) {
+        for (FeatureSet fs : FeatureSets.getInstance().getItems()) {
             addFSColumns(fs);
         }
 
-        tableView.getItems().addAll(AppCore.getSize().getItems());
+        tableView.getItems().addAll(Size.getInstance().getItems());
         tableView.setEditable(true);
     }
 
@@ -102,7 +103,7 @@ public class SizeTable implements Tables {
             @Override
             public ObservableValue call(TableColumn.CellDataFeatures param) {
                 SizeItem currSizeItem = (SizeItem) param.getValue();
-                int index = AppCore.getSize().getItems().indexOf(currSizeItem);
+                int index = Size.getInstance().getItems().indexOf(currSizeItem);
 
 //                if (index < 0) return null;
 
@@ -127,7 +128,7 @@ public class SizeTable implements Tables {
             @Override
             public ObservableValue call(TableColumn.CellDataFeatures param) {
                 SizeItem currSizeItem = (SizeItem) param.getValue();
-                int index = AppCore.getSize().getItems().indexOf(currSizeItem);
+                int index = Size.getInstance().getItems().indexOf(currSizeItem);
 
                 int value = featureSet.getPointMaximum(index);
                 if (value == NOT_ACCESSIBLE) {                                          // не доступно
@@ -208,14 +209,14 @@ public class SizeTable implements Tables {
 
                         //We get here all the info of the Person of this row
                         SizeItem sizeItem = getTableView().getItems().get(getIndex());
-                        int index = AppCore.getSize().getItems().indexOf(sizeItem);
+                        int index = Size.getInstance().getItems().indexOf(sizeItem);
 
                         if (sizeItem.getForOrder() > 0) {
                             boolean isSizeExceeded = sizeItem.getForOrder() > featureSet.getPointMaximum(index) &&
                                     featureSet.getPointMaximum(index) != 0;
                             boolean isTotalOverLimited = /*featureSet.isTotalLimited(sizeItem.getPointType()) &&
                                     AppCore.getSize().isTotallyOverLimited(featureSet.getTotalLimit())*/ false;
-                            boolean isExtensionOverLimited = AppCore.getCalculator().getCalcType() == Calculator.CalcType.EXTENSION &&
+                            boolean isExtensionOverLimited = Calculator.getInstance().isCalcTypeEquals(Calculator.CalcType.EXTENSION) &&
                                     featureSet.getPointMaximum(index) != 0 &&
                                     (sizeItem.getForOrder() > (featureSet.getPointMaximum(index) - featureSet.getPointsIncluded(index)));
 

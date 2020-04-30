@@ -30,14 +30,14 @@ public class CalcTypeMenu {
         calcMenuGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 fxMenu.setText(MENU_CAPTION + ((RadioMenuItem) newValue).getText().trim());
-                AppCore.getCalculator().setCalcMode(Calculator.CalcType.values()[Arrays.asList(calcItems).indexOf(newValue)]);
+                Calculator.getInstance().setCalcMode(Calculator.CalcType.values()[Arrays.asList(calcItems).indexOf(newValue)]);
             }
         });
 
         calcNewSystem.setSelected(true);
 
         MenuItem resetCalc = new MenuItem(SPACE + RESET + SPACE);
-        resetCalc.setOnAction(event -> AppCore.orderDetails());
+        resetCalc.setOnAction(event -> AppCore.resetOrderDetails());
 
         fxMenu.getItems().addAll(calcNewSystem, calcSystemExt, calcSSMMigr, calcPSMMigr, new SeparatorMenuItem(), resetCalc);
     }

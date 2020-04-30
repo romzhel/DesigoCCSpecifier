@@ -6,18 +6,29 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import price_list.OrderPosition;
+import price_list.PriceList;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class Others {
+    private static Others instance;
     private final String SHEET_NAME = "others";
-    private ArrayList<OthersItem> items;
-    private ArrayList<OrderPosition> specification;
+    private List<OthersItem> items;
 
-    public Others(Workbook workbook) {
-        specification = new ArrayList<>();
+    private Others() {
         items = new ArrayList<>();
+    }
+
+    public static Others getInstance() {
+        if (instance == null) {
+            instance = new Others();
+        }
+        return instance;
+    }
+
+    public void init(Workbook workbook) {
         Sheet sheet = workbook.getSheet(SHEET_NAME);
         Row row = null;
         int rowIndex = 0;
@@ -66,7 +77,7 @@ public class Others {
         ArrayList<OrderPosition> result = new ArrayList<>();
         for (OthersItem oi : items) {
             if (oi.isOrdered()) {
-                result.add(AppCore.getPriceList().getNewOrderPosition(oi.getArticle(), 1));
+                result.add(PriceList.getInstance().getNewOrderPosition(oi.getArticle(), 1));
             }
         }
         return result;

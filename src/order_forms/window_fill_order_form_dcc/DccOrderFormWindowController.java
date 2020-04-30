@@ -1,6 +1,6 @@
 package order_forms.window_fill_order_form_dcc;
 
-import core.AppCore;
+import core.BuildingTypes;
 import excel.ExportOrderForm;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -64,7 +64,7 @@ public class DccOrderFormWindowController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cbBuildingType.getItems().addAll(AppCore.getOrderFormBuildingTypes());
+        cbBuildingType.getItems().addAll(BuildingTypes.getInstance().getItems());
         cbMigrSystemType.getItems().addAll("Desigo Insight", "MM/MK8000");
         orderForm = OrderFormFactory.createDccOrderForm(this);
 

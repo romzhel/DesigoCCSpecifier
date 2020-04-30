@@ -5,6 +5,7 @@ import excel.ExportSpecToExcel;
 import excel.ExportSpecToExistingFile;
 import excel.SelectedColumns;
 import tables_data.feature_sets.FeatureSet;
+import tables_data.feature_sets.FeatureSets;
 import window_spec_and_points_tables.SpecTables;
 
 import java.io.File;
@@ -37,7 +38,7 @@ public class ConsoleMode {
             ExcelTable points = specTables.calcPointFromSpec();                     //получаем количество точек
             AppCore.addPointsToSpec();                          //добавляем точки в список для расчётов
 
-            FeatureSet stdFset = AppCore.getFeatureSets().get(AppCore.getFeatureSets().getItems().size() - 1);
+            FeatureSet stdFset = FeatureSets.getInstance().getItems().get(FeatureSets.getInstance().getItems().size() - 1);
 
             if (args.length > 3) {//export result in new file indicated in args[]
                 new ExportSpecToExcel(stdFset.getSpecification(), args[3]);

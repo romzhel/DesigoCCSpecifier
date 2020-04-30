@@ -55,8 +55,8 @@ public class OrderFormFactory {
 
     public static OrderFormFactory createDccOrderForm(DccOrderFormWindowController controller) {
 
-        boolean isNewProject = AppCore.getCalculator().getCalcType() == Calculator.CalcType.NEW;
-        boolean isMigration = !AppCore.getCalculator().getCalcType().getMigrationSuffix().isEmpty();
+        boolean isNewProject = Calculator.getInstance().isCalcTypeEquals(Calculator.CalcType.NEW);
+        boolean isMigration = !Calculator.getInstance().getCalcType().getMigrationSuffix().isEmpty();
         OrderFormFactory orderForm = new OrderFormFactory();
         orderForm.formType = DCC;
         orderForm.DEBTOR_NUMBER = create().setControl(controller.tfDebtorN).setCheckType(CheckType.DIGITS).setPosition("C13");

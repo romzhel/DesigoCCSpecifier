@@ -1,16 +1,23 @@
 package core;
 
+import additional_positions.Others;
 import dialogs.Dialogs;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import point_packets.PointPackets;
 import price_list.OrderPosition;
+import price_list.PriceList;
 import tables_data.feature_sets.FeatureSet;
+import tables_data.feature_sets.FeatureSets;
 import tables_data.options.Option;
+import tables_data.options.Options;
+import tables_data.size.Size;
 import tables_data.size.SizeItem;
 
 import java.util.ArrayList;
 
 public class Calculator {
+    private static Calculator instance;
     private static final OrderPosition EMPTY = null;
     private static final String STANDARD_MIGRATION_SUFFIX = "-SSM";
     private static final String PRIVILEGED_MIGRATION_SUFFIX = "-PSM";
@@ -18,13 +25,20 @@ public class Calculator {
     private BooleanProperty calculationStatus;
     private CalcType calcType;
 
-    public Calculator() {
+    private Calculator() {
         calculationStatus = new SimpleBooleanProperty(false);
         calcType = CalcType.NEW;
     }
 
-    public void getCosts() {
-        for (FeatureSet featureSet : AppCore.getFeatureSets().getItems()) {
+    public static Calculator getInstance() {
+        if (instance == null) {
+            instance = new Calculator();
+        }
+        return instance;
+    }
+
+    public void calcCosts() {
+        for (FeatureSet featureSet : FeatureSets.getInstance().getItems()) {
             featureSet.setSummaryСost(0);
             featureSet.getSpecification().clear();
 
@@ -61,26 +75,26 @@ public class Calculator {
     }
 
     private void addFeatureSetToSpec(FeatureSet featureSet) {
-        featureSet.addToSpecification(AppCore.getPriceList().getNewOrderPosition(
+        featureSet.addToSpecification(PriceList.getInstance().getNewOrderPosition(
                 featureSet.getArticle().concat(calcType.migrationSuffix), featureSet.getAmount()));
     }
 
     private void addPointPacketsToSpec(FeatureSet featureSet) {
         int sizeItemIndex = 0;
-        for (SizeItem sizeItem : AppCore.getSize().getItems()) {
+        for (SizeItem sizeItem : Size.getInstance().getItems()) {
             int includedPoints = featureSet.getPointsIncluded(sizeItemIndex++);
             int orderedPoints = sizeItem.getForOrder();
 
             if (includedPoints == -1 || (includedPoints >= orderedPoints && calcType != CalcType.EXTENSION)) continue;
 
             int forOrderPoints = calcType == CalcType.EXTENSION ? orderedPoints : orderedPoints - includedPoints;
-            featureSet.addToSpecification(AppCore.getPointPackets().getSpecification(forOrderPoints, sizeItem.getPointType()));
+            featureSet.addToSpecification(PointPackets.getInstance().getSpecification(forOrderPoints, sizeItem.getPointType()));
         }
     }
 
     private void addOptionsToSpec(FeatureSet featureSet) {
         int optionIndex = 0;
-        for (Option option : AppCore.getOptions().getItems()) {
+        for (Option option : Options.getInstance().getItems()) {
             if (option.isOrdered() && featureSet.getOptionAccessibility(optionIndex) == Option.ORDERABLE) {
                 if (option.getArticle() != null && !option.getArticle().isEmpty()) {
                     addPositionToSpec(featureSet, option.getArticle());
@@ -91,7 +105,7 @@ public class Calculator {
     }
 
     private void addPositionToSpec(FeatureSet featureSet, String article) {
-        OrderPosition addedOrderPosition = AppCore.getPriceList().getNewOrderPosition(article, 1);
+        OrderPosition addedOrderPosition = PriceList.getInstance().getNewOrderPosition(article, 1);
 
         if (addedOrderPosition != null) {
             featureSet.addToSpecification(addedOrderPosition);
@@ -108,7 +122,7 @@ public class Calculator {
     }
 
     private void addSizeSupplyPositions(FeatureSet featureSet) {
-        for (SizeItem sizeItem : AppCore.getSize().getItems()) {
+        for (SizeItem sizeItem : Size.getInstance().getItems()) {
             if (sizeItem.getForOrder() > 0 && !sizeItem.getAddArticles().isEmpty()) {
                 for (String article : sizeItem.getAddArticles().split("\\,")) {
                     addPositionToSpec(featureSet, article);
@@ -132,7 +146,7 @@ public class Calculator {
     }
 
     public void addOthersToSpec(FeatureSet featureSet) {
-        ArrayList<OrderPosition> otherSpec = AppCore.getOthers().getOtherSpecification();
+        ArrayList<OrderPosition> otherSpec = Others.getInstance().getOtherSpecification();
         if (otherSpec != null) {
             featureSet.getSpecification().addAll(otherSpec);
         }
@@ -153,6 +167,10 @@ public class Calculator {
 
     public CalcType getCalcType() {
         return calcType;
+    }
+
+    public boolean isCalcTypeEquals(CalcType calcType) {
+        return this.calcType == calcType;
     }
 
     public enum CalcType {

@@ -1,7 +1,8 @@
 package point_packets;
 
-import core.AppCore;
+import core.Calculator;
 import price_list.OrderPosition;
+import price_list.PriceList;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,8 +42,8 @@ public class PointPacket {
             Packet packet = packets.get(index);
 
             if (packet.forOrder != 0) {
-                result.add(AppCore.getPriceList().getNewOrderPosition(
-                        packet.article.concat(AppCore.getCalculator().getCalcType().getMigrationSuffix()),
+                result.add(PriceList.getInstance().getNewOrderPosition(
+                        packet.article.concat(Calculator.getInstance().getCalcType().getMigrationSuffix()),
                         packet.forOrder));
             }
         }
@@ -70,14 +71,14 @@ public class PointPacket {
         for (int currPacketIndex = 1; currPacketIndex < packets.size(); currPacketIndex++) {
             Packet currentPacket = packets.get(currPacketIndex);
             int currentPacketPoints = currentPacket.pointAmount;
-            double currentPacketCost = AppCore.getPriceList().getCost(currentPacket.article);
+            double currentPacketCost = PriceList.getInstance().getCost(currentPacket.article);
 
             int previousPacketsPoints = 0;
             double previousPacketsCosts = 0;
             for (int prevPacketIndex = 0; prevPacketIndex < currPacketIndex; prevPacketIndex++) {
                 Packet previousPacket = packets.get(prevPacketIndex);
                 previousPacketsPoints += previousPacket.forOrder * previousPacket.pointAmount;
-                previousPacketsCosts += previousPacket.forOrder * AppCore.getPriceList().getCost(previousPacket.article);
+                previousPacketsCosts += previousPacket.forOrder * PriceList.getInstance().getCost(previousPacket.article);
             }
 
             if (previousPacketsPoints <= currentPacketPoints && previousPacketsCosts >= currentPacketCost) {

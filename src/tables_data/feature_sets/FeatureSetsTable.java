@@ -34,7 +34,7 @@ public class FeatureSetsTable implements Tables {
     }
 
     private void addContent() {
-        tableView.getItems().addAll(AppCore.getFeatureSets().getItems());
+        tableView.getItems().addAll(FeatureSets.getInstance().getItems());
     }
 
     private void initDescriptionColumn() {
@@ -72,13 +72,13 @@ public class FeatureSetsTable implements Tables {
 
                         //We get here all the info of the Person of this row
 //                        FeatureSet fs = getTableView().getItems().get(getIndex());
-                        FeatureSet fs = AppCore.getFeatureSets().get(getIndex());
+                        FeatureSet fs = FeatureSets.getInstance().getItems().get(getIndex());
 
                         if (fs.isOverLimited()) {
                             setText("не применимо");
                             setTextFill(Color.RED); //The text in red
                         } else {
-                            if (AppCore.getCalculator().getCalcType() == Calculator.CalcType.EXTENSION) {
+                            if (Calculator.getInstance().isCalcTypeEquals(Calculator.CalcType.EXTENSION)) {
                                 if (fs.getDescriptionEn().contains("Standart")) setTextFill(Color.GREEN);
                                 else setTextFill(Color.ORANGE);
                             } else {

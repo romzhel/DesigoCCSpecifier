@@ -1,6 +1,7 @@
 package window_main;
 
 import core.AppCore;
+import core.VersionInfo;
 import dialogs.Dialogs;
 import excel.ExportSpecToExcel;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import order_forms.window_fill_order_form_dcc.DccOrderFormWindow;
 import tables_data.feature_sets.FeatureSet;
+import tables_data.feature_sets.FeatureSets;
 import tables_data.feature_sets.FeatureSetsTable;
 import tables_data.options.Option;
 import tables_data.options.OptionsTable;
@@ -33,7 +35,8 @@ public class Controller implements Initializable {
     public static final int FOR_ORDER_COLUMN_WIDTH = 85;
     public static final int FEATURE_SET_COLUMN_WIDTH = 126;
     public static final int DEFAULT_PANE = 1;
-    public static final String WEB_PAGE_URI = "http://www.buildingtechnologies.siemens.ru/products/DesigoCC/desigo_cc_features/";
+    public static final String WEB_PAGE_URI = "https://new.siemens.com/ru/ru/produkty/avtomatizaciya-i-bezopasnost-" +
+            "zdanij/avtomatizaciya-zdanij/desigo/sistemy-upravleniya-zdaniem/desigo-cc.html";
     public static final String CLOUD_URI = "https://cloud.mail.ru/public/KHua/8pmtkDn2S";
     public static final String MANUAL_URI = "https://cloud.mail.ru/public/GLEx/X1dDhoU9u";
 
@@ -77,8 +80,8 @@ public class Controller implements Initializable {
     }
 
     private void initVersionLabels() {
-        lDCCVersionInfo.setText(AppCore.getVersions().getVersion(0));
-        lSchemeVersionInfo.setText(AppCore.getVersions().getVersion(1));
+        lDCCVersionInfo.setText(VersionInfo.getInstance().getVersion(0));
+        lSchemeVersionInfo.setText(VersionInfo.getInstance().getVersion(1));
         build.setText("(Версия программы " + AppCore.getBuildInfo() + ")");
     }
 
@@ -124,7 +127,7 @@ public class Controller implements Initializable {
         int index = tvSpec.getSelectionModel().getSelectedIndex();
         FeatureSet fs = tvSpec.getItems().get(index);
         if (!fs.isOverLimited()) {
-            if (index != (AppCore.getFeatureSets().getItems().size() - 1)) {
+            if (index != (FeatureSets.getInstance().getItems().size() - 1)) {
                 if (new Dialogs().confirm("Выбор базового пакета", "ОБРАТИТЕ ВНИМАНИЕ," +
                         " выбран базовый пакет с ограниченной функциональностью. \n\nПродолжить?")) {
                     new ExportSpecToExcel(fs.getSpecification(), null);

@@ -1,18 +1,29 @@
 package price_list;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PriceList {
+    private static PriceList instance;
     private final String SHEET_NAME = "price_list";
-    private ObservableList<OrderPosition> priceList;
+    private List<OrderPosition> priceList;
 
-    public PriceList(Workbook workbook) {
-        priceList = FXCollections.observableArrayList();
+    public PriceList() {
+        priceList = new ArrayList<>();
+    }
 
+    public static PriceList getInstance() {
+        if (instance == null) {
+            instance = new PriceList();
+        }
+        return instance;
+    }
+
+    public void init(Workbook workbook) {
         Sheet sheet = workbook.getSheet(SHEET_NAME);
         Row row = null;
         int rowIndex = 0;
@@ -22,7 +33,7 @@ public class PriceList {
         }
     }
 
-    public ObservableList<OrderPosition> getItems() {
+    public List<OrderPosition> getItems() {
         return priceList;
     }
 
@@ -56,5 +67,4 @@ public class PriceList {
         }
         return new OrderPosition(copiedOrderPosition, amount);
     }
-
 }

@@ -5,9 +5,6 @@ import dialogs.Dialogs;
 import excel.ExcelRow;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import point_matrix.PointMatrix;
@@ -22,6 +19,7 @@ import tables_data.size.SizeItem;
 import window_spec_and_points_tables.SpecTables;
 import window_spec_and_points_tables.SpecTablesWindow;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,96 +33,45 @@ public class AppCore {
     private static Workbook workbook;
     private static Stage mainStage;
     private static AnchorPane infoPane;
-    private static Options options;
-    private static Size size;
-    private static FeatureSets featureSets;
-    private static PriceList priceList;
-    private static PointMatrix pointMatrix;
-    private static PointPackets pointPackets;
-    private static Calculator calculator;
-    private static ArrayList<Tables> tables = new ArrayList<>();
+    private static List<Tables> tables = new ArrayList<>();
     private static SpecTables specTables;
-    private static Others others;
-    private static VersionInfo versions;
-    private static List<String> orderFormBuildingTypes = new ArrayList<>();
 
     public static void init() {
         openResourceFile();
 
-        options = new Options(workbook);
-        size = new Size(workbook);
-        featureSets = new FeatureSets(workbook);
-        priceList = new PriceList(workbook);
-        pointMatrix = new PointMatrix(workbook);
-        others = new Others(workbook);
+        Options.getInstance().init(workbook);
+        Size.getInstance().init(workbook);
+        FeatureSets.getInstance().init(workbook);
+        PriceList.getInstance().init(workbook);
+        PointMatrix.getInstance().init(workbook);
 
-        pointPackets = new PointPackets(priceList);
-        calculator = new Calculator();
-        versions = new VersionInfo(workbook);
-        getBuildingTypes();
+        Others.getInstance().init(workbook);
+
+        PointPackets.getInstance().init(PriceList.getInstance());
+        VersionInfo.getInstance().init(workbook);
+        BuildingTypes.getInstance().init(workbook);
 
         closeResourceFile();
 
-        calculator.getCosts();
-    }
-
-    private static void getBuildingTypes() {
-        Sheet sheet = workbook.getSheet("building_types");
-        Row row;
-        int rowIndex = 0;
-
-        while ((row = sheet.getRow(rowIndex++)) != null) {
-            orderFormBuildingTypes.add(row.getCell(0).getStringCellValue());
-        }
+        Calculator.getInstance().calcCosts();
     }
 
     private static void closeResourceFile() {
-        try {
-            workbook.close();
+        for (Closeable cl : new Closeable[]{workbook, appDataIS}) {
+            try {
+                cl.close();
+            } catch (IOException e) {
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            appDataIS.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            }
         }
     }
 
     private static void openResourceFile() {
         try {
             workbook = WorkbookFactory.create(appDataIS);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static Options getOptions() {
-        return options;
-    }
-
-    public static Size getSize() {
-        return size;
-    }
-
-    public static FeatureSets getFeatureSets() {
-        return featureSets;
-    }
-
-    public static PriceList getPriceList() {
-        return priceList;
-    }
-
-    public static PointPackets getPointPackets() {
-        return pointPackets;
-    }
-
-    public static Calculator getCalculator() {
-        return calculator;
     }
 
     public static void addRefreshedTables(Tables... tables) {
@@ -132,11 +79,11 @@ public class AppCore {
     }
 
     public static void refreshTables() {
-        for (FeatureSet fs : featureSets.getItems()) {
+        for (FeatureSet fs : FeatureSets.getInstance().getItems()) {
             fs.setOverLimited(false);
         }
 
-        AppCore.getCalculator().getCosts();
+        Calculator.getInstance().calcCosts();
 
         for (Tables table : tables) {
             table.refresh();
@@ -159,19 +106,6 @@ public class AppCore {
         AppCore.specTables = specTables;
     }
 
-    public static String[] getSheetNames() {
-        int sheetsCount = workbook.getNumberOfSheets();
-        String[] result = new String[sheetsCount];
-
-        for (int sheetIndex = 0; sheetIndex < sheetsCount; sheetIndex++) {
-            String sheetName = workbook.getSheetName(sheetIndex);
-            result[sheetIndex] = sheetName;
-            System.out.println(workbook.getSheetName(sheetIndex));
-        }
-
-        return result;
-    }
-
     public static void extractPointsFromSpec() {
         File excelSpecFile = new Dialogs().openFile();
         if (excelSpecFile != null && excelSpecFile.exists()) {
@@ -181,13 +115,8 @@ public class AppCore {
         }
     }
 
-
-    public static PointMatrix getPointMatrix() {
-        return pointMatrix;
-    }
-
     public static void addPointsToSpec() {
-        for (SizeItem sizeItem : size.getItems()) {
+        for (SizeItem sizeItem : Size.getInstance().getItems()) {
             for (ExcelRow excelRow : specTables.getFoundPoints().getRows()) {
                 String currPointType = sizeItem.getPointType();
                 String calcPointType = excelRow.getCellValue(SpecTables.POINTS_CALCED_TABLE_POINT_TYPE_COLUMN);
@@ -199,28 +128,20 @@ public class AppCore {
             }
         }
 
-        calculator.getCosts();
+//        Calculator.getInstance().calcCosts();
         refreshTables();
     }
 
-    public static void orderDetails() {
-        for (SizeItem sizeItem : size.getItems()) {
+    public static void resetOrderDetails() {
+        for (SizeItem sizeItem : Size.getInstance().getItems()) {
             sizeItem.setForOrder(0);
         }
 
-        for (Option option : options.getItems()) {
+        for (Option option : Options.getInstance().getItems()) {
             option.setOrdered(false);
         }
 
         refreshTables();
-    }
-
-    public static Others getOthers() {
-        return others;
-    }
-
-    public static VersionInfo getVersions() {
-        return versions;
     }
 
     public static AnchorPane getInfoPane() {
@@ -238,9 +159,5 @@ public class AppCore {
 
     public static String getBuildInfo() {
         return buildInfo;
-    }
-
-    public static List<String> getOrderFormBuildingTypes() {
-        return orderFormBuildingTypes;
     }
 }

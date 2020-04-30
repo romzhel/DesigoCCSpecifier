@@ -1,20 +1,32 @@
 package tables_data.feature_sets;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FeatureSets {
+    private static FeatureSets instance;
     private final String SHEET_NAME = "feat_sets";
     private final String SHEET_NAME_FS_SIZE = "fs_size";
     private final String SHEET_NAME_FS_OPTIONS = "fs_options";
-    private ObservableList<FeatureSet> featureSets;
+    private List<FeatureSet> featureSets;
 
-    public FeatureSets(Workbook workbook) {
-        featureSets = FXCollections.observableArrayList();
+    private FeatureSets() {
+        featureSets = new ArrayList<>();
+    }
+
+    public static FeatureSets getInstance() {
+        if (instance == null) {
+            instance = new FeatureSets();
+        }
+        return instance;
+    }
+
+    public void init(Workbook workbook) {
         initSize(workbook);
         initOptions(workbook);
     }
@@ -62,7 +74,7 @@ public class FeatureSets {
         }
     }
 
-    public ObservableList<FeatureSet> getItems() {
+    public List<FeatureSet> getItems() {
         return featureSets;
     }
 

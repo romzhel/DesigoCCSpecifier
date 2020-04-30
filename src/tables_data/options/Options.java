@@ -1,20 +1,31 @@
 package tables_data.options;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Options {
+    private static Options instance;
     private final String SHEET_NAME = "options";
-    private ObservableList<Option> options;
+    private List<Option> options;
 
-    public Options(Workbook workbook) {
-        options = FXCollections.observableArrayList();
+    private Options() {
+        options = new ArrayList<>();
+    }
 
+    public static Options getInstance() {
+        if (instance == null) {
+            instance = new Options();
+        }
+        return instance;
+    }
+
+    public void init(Workbook workbook) {
         Sheet sheet = workbook.getSheet(SHEET_NAME);
-        Row row = null;
+        Row row;
         int rowIndex = 0;
 
         while ((row = sheet.getRow(++rowIndex)) != null) {
@@ -22,7 +33,7 @@ public class Options {
         }
     }
 
-    public ObservableList<Option> getItems() {
+    public List<Option> getItems() {
         return options;
     }
 }

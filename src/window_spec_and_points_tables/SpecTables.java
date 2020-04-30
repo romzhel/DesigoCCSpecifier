@@ -1,6 +1,5 @@
 package window_spec_and_points_tables;
 
-import core.AppCore;
 import excel.DataSize;
 import excel.ExcelRow;
 import excel.ExcelTable;
@@ -15,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import point_matrix.PointMatrix;
 import point_matrix.PointMatrixItem;
 
 import java.io.File;
@@ -273,7 +273,7 @@ public class SpecTables {
                 continue;
             }
 
-            for (PointMatrixItem pointMatrixItem : AppCore.getPointMatrix().findPoints(id)) {
+            for (PointMatrixItem pointMatrixItem : PointMatrix.getInstance().findPoints(id)) {
                 foundPoints.addRow(
                         pointMatrixItem.getSsn(),
                         pointMatrixItem.getArticle(),

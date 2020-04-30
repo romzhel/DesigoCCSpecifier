@@ -1,19 +1,30 @@
 package point_matrix;
 
-import core.AppCore;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import tables_data.size.Size;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PointMatrix {
+    private static PointMatrix instance;
     private final String SHEET_NAME_PART = "matrix";
-    private ArrayList<PointMatrixItem> pointMatrixItems;
+    private List<PointMatrixItem> items;
 
-    public PointMatrix(Workbook workbook) {
-        pointMatrixItems = new ArrayList<>();
+    private PointMatrix() {
+        items = new ArrayList<>();
+    }
 
+    public static PointMatrix getInstance() {
+        if (instance == null) {
+            instance = new PointMatrix();
+        }
+        return instance;
+    }
+
+    public void init(Workbook workbook) {
         for (int sheetIndex = 0; sheetIndex < workbook.getNumberOfSheets(); sheetIndex++) {
             Sheet sheet = workbook.getSheetAt(sheetIndex);
 
@@ -24,8 +35,8 @@ public class PointMatrix {
                 while ((row = sheet.getRow(++rowIndex)) != null) {
                     PointMatrixItem pmi = new PointMatrixItem(row);
 
-                    if (AppCore.getSize().isCorrectPointType(pmi.getPointType())) {
-                        pointMatrixItems.add(pmi);
+                    if (Size.getInstance().isCorrectPointType(pmi.getPointType())) {
+                        items.add(pmi);
                     } else {
                         System.out.println("invalid point type for " + pmi.getArticle() + " - " + pmi.getPointType() +
                                 " (sheet name " + sheet.getSheetName() + ", line " + rowIndex + ")");
@@ -35,9 +46,9 @@ public class PointMatrix {
         }
     }
 
-    public ArrayList<PointMatrixItem> findPoints(String idValue) {
-        ArrayList<PointMatrixItem> result = new ArrayList<>();
-        for (PointMatrixItem pmi : pointMatrixItems) {
+    public List<PointMatrixItem> findPoints(String idValue) {
+        List<PointMatrixItem> result = new ArrayList<>();
+        for (PointMatrixItem pmi : items) {
             if (pmi.getSsn().equals(idValue) || pmi.getArticle().equals(idValue)) {
                 result.add(pmi);
             }
