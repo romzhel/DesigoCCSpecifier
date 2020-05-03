@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 
 public class OrderPosition {
+    public static final OrderPosition EMPTY = null;
     private final int SSN_COLUMN = 0;
     private final int ARTICLE_COLUMN = 1;
     private final int DESCRIPTION_EN_COLUMN = 2;

@@ -16,9 +16,10 @@ import tables_data.size.SizeItem;
 
 import java.util.ArrayList;
 
+import static price_list.OrderPosition.EMPTY;
+
 public class Calculator {
     private static Calculator instance;
-    private static final OrderPosition EMPTY = null;
     private static final String STANDARD_MIGRATION_SUFFIX = "-SSM";
     private static final String PRIVILEGED_MIGRATION_SUFFIX = "-PSM";
     private String errorOrderPosition = "";

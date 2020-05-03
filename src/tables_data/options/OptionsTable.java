@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.util.Callback;
 import tables_data.feature_sets.FeatureSet;
@@ -60,6 +61,14 @@ public class OptionsTable implements Tables {
         orderCol.setCellFactory(CheckBoxTableCell.forTableColumn(orderCol));
         orderCol.setPrefWidth(Controller.FOR_ORDER_COLUMN_WIDTH);
         tableView.getColumns().add(orderCol);
+
+        tableView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getClickCount() == 2) {
+                Option selectedOption = tableView.getSelectionModel().getSelectedItem();
+                selectedOption.setOrdered(!selectedOption.isOrdered());
+                AppCore.refreshTables();
+            }
+        });
 
         tableView.addEventFilter(ScrollEvent.ANY, scrollEvent -> {
             tableView.refresh();
@@ -117,8 +126,8 @@ public class OptionsTable implements Tables {
         });
         //-------------------------------------------------------------------------------------------------------------
         tableColumn.setSortable(false);
-        tableView.getColumns().add(tableColumn);
         tableColumn.setEditable(false);
+        tableView.getColumns().add(tableColumn);
     }
 
 

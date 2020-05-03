@@ -9,6 +9,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
@@ -24,7 +25,7 @@ import static tables_data.size.SizeItem.NOT_LIMITED;
 import static window_main.Controller.*;
 
 public class SizeTable implements Tables {
-    private static final String COL_STYLE = " -fx-border-width: 0 1 0 0; -fx-border-color: #a9a9a9;";
+    private static final String COL_STYLE = " -fx-border-width: 0 1 0 0; -fx-border-color: #c0c0c0;";
     private TableView<SizeItem> tableView;
 
     public SizeTable(TableView<SizeItem> tableView) {
@@ -40,6 +41,12 @@ public class SizeTable implements Tables {
 
         tableView.getItems().addAll(Size.getInstance().getItems());
         tableView.setEditable(true);
+
+        tableView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getClickCount() == 2) {
+                tableView.edit(tableView.getSelectionModel().getSelectedIndex(), tableView.getColumns().get(1));
+            }
+        });
     }
 
     private void initOrderColumn(TableView<SizeItem> tableView) {
@@ -91,6 +98,13 @@ public class SizeTable implements Tables {
         descriptionCol.setEditable(false);
         descriptionCol.setStyle(COL_STYLE);
         tableView.getColumns().add(descriptionCol);
+
+        descriptionCol.addEventHandler(TableColumn.editAnyEvent(), event -> {
+
+            System.out.println(event);
+            event.consume();
+        });
+
     }
 
     public void addFSColumns(FeatureSet featureSet) {
@@ -245,6 +259,9 @@ public class SizeTable implements Tables {
         FSColumns.get(0).setSortable(false);
         FSColumns.get(1).setSortable(false);
         FSColumns.get(2).setSortable(false);
+        FSColumns.get(2).setEditable(false);
+        FSColumns.get(1).setEditable(false);
+        FSColumns.get(0).setEditable(false);
         FSColumns.get(0).setPrefWidth(FEATURE_SET_COLUMN_WIDTH);
         FSColumns.get(1).setPrefWidth(FEATURE_SET_COLUMN_WIDTH / 2);
         FSColumns.get(1).setStyle("-fx-alignment: CENTER; ");

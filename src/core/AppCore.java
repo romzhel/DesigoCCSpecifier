@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AppCore {
-    private static String buildInfo = "1.2.5 от 30.04.2020";
+    private static String buildInfo = "1.2.6 от 03.05.2020";
     private static InputStream appDataIS = AppCore.class.getResourceAsStream("/data.xlsx");
     private static Workbook workbook;
     private static Stage mainStage;
