@@ -26,6 +26,10 @@ public class ExportSpecToExcel {
     }
 
     public ExportSpecToExcel(List<OrderPosition> specification, String fileName) {
+        if (specification.stream().anyMatch(orderPosition -> orderPosition != null && orderPosition.getCost() == null)) {
+            new Dialogs().showMessage("Экспорт спецификации", "ОБРАТИТЕ ВНИМАНИЕ!!!\n\nТребуется уточнение " +
+                    "стоимости некоторых позиций, общая стоимость требует корректировки!");
+        }
         export(specification, fileName);
     }
 
@@ -74,9 +78,15 @@ public class ExportSpecToExcel {
             cell.setCellStyle(cellStyle);
             cell.setCellValue(op.getAmount());
 
-            cell = row.createCell(5, CellType.NUMERIC);
+            if (op.getCost() == null) {
+                cell = row.createCell(5, CellType.STRING);
+                cell.setCellValue("По запросу");
+            } else {
+                cell = row.createCell(5, CellType.NUMERIC);
+                cell.setCellValue(op.getCost());
+            }
             cell.setCellStyle(cellStyle);
-            cell.setCellValue(op.getCost());
+
 
             cell = row.createCell(6, CellType.NUMERIC);
             cell.setCellStyle(cellStyle);

@@ -14,7 +14,7 @@ public class OrderPosition {
     private String article;
     private String descriptionEn;
     private String descriptionRu;
-    private double cost;
+    private Double cost;
     private int amount;
 
     public OrderPosition(Row row) {
@@ -73,7 +73,7 @@ public class OrderPosition {
         return descriptionRu;
     }
 
-    public double getCost() {
+    public Double getCost() {
         return cost;
     }
 

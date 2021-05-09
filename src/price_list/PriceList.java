@@ -31,6 +31,8 @@ public class PriceList {
         while ((row = sheet.getRow(++rowIndex)) != null) {
             priceList.add(new OrderPosition(row));
         }
+
+        System.out.println();
     }
 
     public List<OrderPosition> getItems() {

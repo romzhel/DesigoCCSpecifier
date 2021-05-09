@@ -140,7 +140,7 @@ public class Calculator {
 
     private void calcSummaryCostBySpec(FeatureSet featureSet) {
         for (OrderPosition orderPosition : featureSet.getSpecification()) {
-            if (orderPosition != null) {
+            if (orderPosition != null && orderPosition.getCost() != null) {
                 featureSet.addToSummaryCost(orderPosition.getCost() * orderPosition.getAmount());
             }
         }
