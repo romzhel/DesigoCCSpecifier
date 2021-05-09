@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane prefHeight="276.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="order_forms.window_fill_order_form_eng.EngOrderFormWindowController">
+   <children>
+      <Button fx:id="btnCancel" layoutX="460.0" layoutY="232.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="158.0" text="Отмена" />
+      <Button fx:id="btnOk" layoutX="260.0" layoutY="232.0" mnemonicParsing="false" onAction="#createForm" prefHeight="25.0" prefWidth="158.0" text="ОК" />
+      <TextField fx:id="tfDongle" layoutX="240.0" layoutY="190.0" prefHeight="25.0" prefWidth="381.0" promptText="заполняем цифрами (несколько номеров ключей через запятую)" />
+      <Label fx:id="lDongle" alignment="CENTER_RIGHT" layoutX="72.0" layoutY="194.0" prefHeight="17.0" prefWidth="158.0" text="Номер ключа защиты" />
+      <Label alignment="CENTER_RIGHT" layoutX="5.0" layoutY="118.0" prefHeight="43.0" prefWidth="225.0" text="Конечный заказчик (лиц. согл.)*" textAlignment="RIGHT" />
+      <TextField fx:id="tfCustomer" layoutX="240.0" layoutY="127.0" prefHeight="25.0" prefWidth="381.0" promptText="заполняем кириллицей" />
+      <Label fx:id="lAmount" alignment="CENTER_RIGHT" layoutX="72.0" layoutY="163.0" prefHeight="17.0" prefWidth="158.0" text="Количество*" />
+      <ComboBox fx:id="cbAmount" layoutX="240.0" layoutY="159.0" prefHeight="25.0" prefWidth="71.0" />
+      <TextField fx:id="tfDebtorEn" layoutX="240.0" layoutY="60.0" prefHeight="25.0" prefWidth="381.0" promptText="заполняем латиницей" />
+      <Label alignment="CENTER_RIGHT" layoutX="72.0" layoutY="64.0" prefHeight="17.0" prefWidth="158.0" text="Дебитор (англ)*" />
+      <TextField fx:id="tfDebtorN" layoutX="240.0" layoutY="26.0" prefHeight="25.0" prefWidth="381.0" promptText="заполняем цифрами" />
+      <Label alignment="CENTER_RIGHT" layoutX="72.0" layoutY="30.0" prefHeight="17.0" prefWidth="158.0" text="Дебитор №*" />
+      <Label alignment="CENTER_RIGHT" layoutX="72.0" layoutY="98.0" prefHeight="17.0" prefWidth="158.0" text="Дебитор (рус)*" />
+      <TextField fx:id="tfDebtorRu" layoutX="240.0" layoutY="94.0" prefHeight="25.0" prefWidth="381.0" promptText="заполняем кириллицей" />
+      <Button fx:id="btnLoadData" layoutX="56.0" layoutY="232.0" mnemonicParsing="false" onAction="#loadData" prefHeight="25.0" prefWidth="158.0" text="Загрузить данные" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,88 @@
+.table-cell .check-box .box {
+    -fx-background-color: white;
+    -fx-border-color:black;
+    -fx-border-radius:3px;
+    -fx-padding:2px
+}
+
+.table-cell .check-box:selected .box {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-radius: 3px;
+    -fx-padding: 2px
+}
+
+.table-cell .check-box:selected .mark {
+    -fx-background-color: black;
+}
+
+
+.grey_by-default .check-box .box {
+    -fx-background-color: white;
+    -fx-border-color:grey;
+    -fx-border-radius:3px;
+}
+
+.grey_by-default .check-box:selected .box {
+    -fx-background-color: white;
+    -fx-border-color: grey;
+    -fx-border-radius: 3px;
+}
+
+.grey_by-default .check-box:selected .mark {
+    -fx-background-color: grey;
+}
+
+.green .check-box .box {
+    -fx-background-color: #CCFFCC;
+    -fx-border-color:green;
+    -fx-border-radius:3px;
+}
+
+.green .check-box:selected .box {
+    -fx-background-color: #CCFFCC;
+    -fx-border-color: green;
+    -fx-border-radius: 3px;
+}
+
+.green .check-box:selected .mark {
+    -fx-background-color: green;
+}
+
+.red .check-box .box {
+    -fx-background-color: #FFCCCC;
+    -fx-border-color:red;
+    -fx-border-radius:3px;
+}
+
+.red .check-box:selected .box {
+    -fx-background-color: #FFCCCC;
+    -fx-border-color: grey;
+    -fx-border-radius: 3px;
+}
+
+.red .check-box:selected .mark {
+    -fx-background-color: red;
+}
+
+.my_header .column-header {
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: transparent #c0c0c0 -fx-box-border transparent;
+}
+
+.my_header .cell {
+    -fx-label-padding: 0 5 0 5;
+}
+
+.my_column .column-header {
+    -fx-border-width: 0 1 1 0;
+    -fx-border-color: transparent #c0c0c0 -fx-box-border transparent;
+}
+
+.my_column .cell {
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: transparent #c0c0c0 transparent transparent;
+    -fx-padding: 0 -1 0 0;
+    -fx-label-padding: 0 5 0 5;
+}
+
