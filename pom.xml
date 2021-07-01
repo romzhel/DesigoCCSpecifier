@@ -35,37 +35,13 @@
                 </configuration>
             </plugin>
 
-            <!--            <plugin>-->
-            <!--                <groupId>org.apache.maven.plugins</groupId>-->
-            <!--                <artifactId>maven-resources-plugin</artifactId>-->
-            <!--                <version>3.2.0</version>-->
-            <!--                <configuration>-->
-            <!--                    <encoding>UTF-8</encoding>-->
-            <!--                </configuration>-->
-            <!--            </plugin>-->
-
-            <!-- <plugin>
-                 <groupId>org.apache.maven.plugins</groupId>
-                 <artifactId>maven-jar-plugin</artifactId>
-                 <version>3.2.0</version>
-                 <configuration>
-                     <archive>
-                         <manifest>
-                             <addClasspath>true</addClasspath>
-                             <classpathPrefix>_lib/</classpathPrefix>
-                             <mainClass>window_main.Main.java</mainClass>
-                         </manifest>
-                     </archive>
-                 </configuration>
-             </plugin>-->
-
-            <!-- <plugin>
+             <plugin>
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-assembly-plugin</artifactId>
                  <configuration>
                      <archive>
                          <manifest>
-                             <mainClass>ui_windows.main_window.MainWindow</mainClass>
+                             <mainClass>window_main.Main</mainClass>
                          </manifest>
                      </archive>
                      <descriptors>
@@ -80,7 +56,7 @@
                          </goals>
                      </execution>
                  </executions>
-             </plugin>    -->
+             </plugin>
         </plugins>
     </build>
 
