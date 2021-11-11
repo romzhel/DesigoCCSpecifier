@@ -16,7 +16,7 @@ import static order_forms.OrderFormItem.create;
 import static order_forms.OrderFormType.*;
 
 public class OrderFormFactory {
-    private ArrayList<OrderFormItem> orderFormItems = new ArrayList<>();
+    private List<OrderFormItem> orderFormItems = new ArrayList<>();
     private OrderFormType formType;
     private String id;
 
@@ -69,10 +69,12 @@ public class OrderFormFactory {
         orderForm.CUSTOMER = create().setControl(controller.tfCompany).setPosition("C21");
         orderForm.PROJECT_NAME = create().setControl(controller.tfProjectName).setPosition("C23");
         orderForm.END_CUSTOMER_RU = create().setControl(controller.tfCustomer).setCheckType(CheckType.LETTERS_RU).setPosition("C31");
-        orderForm.ADDRESS_EN = create().setControl(controller.taAddressEn).setPosition("C33");
+        orderForm.ADDRESS_EN = create().setControl(controller.taAddressEn).setCheckType(CheckType.LETTERS_EN).setPosition("C33");
         orderForm.ADDRESS_RU = create().setControl(controller.taAddressRu).setCheckType(CheckType.LETTERS_RU).setPosition("C35");
         orderForm.POST_INDEX = create().setControl(controller.tfPostIndex).setCheckType(CheckType.DIGITS).setPosition("C37");
         orderForm.BUILDING_TYPE = create().setControl(controller.cbBuildingType).setPosition("C39");
+        orderForm.CSID = create().setControl(controller.tfCsid).setLabel(controller.lCsid)
+                .setVisible(!isNewProject && !isMigration).setCheckType(CheckType.DIGITS).setPosition("C41");
 
         orderForm.MIGRATED_SYSTEM_LABEL = create().setValue("System type*").setPosition("F27")
                 .setVisible(isMigration).setHidden(!isMigration).setCellStyle(STYLE_LEFT_BOLD);
@@ -83,17 +85,11 @@ public class OrderFormFactory {
         orderForm.MIGRATED_SYSTEM_NAME = create().setControl(controller.tfMigrSystemName)
                 .setLabel(controller.lMigrSystemName).setVisible(isMigration).setPosition("H29:J29").setHidden(!isMigration);
 
-        orderForm.DONGLE = create().setControl(controller.tfDongle).setLabel(controller.lDongle)
-                .setVisible(!isNewProject).setCheckType(CheckType.DIGITS).setPosition("C41").setLinkedItem(() -> orderForm.CSID);
-        orderForm.CSID = create().setControl(controller.tfCsid).setLabel(controller.lCsid)
-                .setVisible(!isNewProject && !isMigration).setCheckType(CheckType.DIGITS).setPosition("L41")
-                .setLinkedItem(() -> orderForm.DONGLE);
-
         orderForm.orderFormItems.addAll(Arrays.asList(orderForm.ID, orderForm.NEW_PROJECT, orderForm.EXTENSION,
                 orderForm.COUNTRY_FULL, orderForm.COUNTRY_SHORT, orderForm.CUSTOMER, orderForm.PROJECT_NAME,
-                orderForm.END_CUSTOMER_RU, orderForm.ADDRESS_EN, orderForm.ADDRESS_RU, orderForm.POST_INDEX, orderForm.BUILDING_TYPE, orderForm.DONGLE,
-                orderForm.CSID, orderForm.MIGRATION, orderForm.MIGRATED_SYSTEM, orderForm.MIGRATED_SYSTEM_NAME,
-                orderForm.MIGRATED_SYSTEM_LABEL, orderForm.MIGRATED_SYSTEM_NAME_LABEL,
+                orderForm.END_CUSTOMER_RU, orderForm.ADDRESS_EN, orderForm.ADDRESS_RU, orderForm.POST_INDEX,
+                orderForm.BUILDING_TYPE, orderForm.CSID, orderForm.MIGRATION, orderForm.MIGRATED_SYSTEM,
+                orderForm.MIGRATED_SYSTEM_NAME, orderForm.MIGRATED_SYSTEM_LABEL, orderForm.MIGRATED_SYSTEM_NAME_LABEL,
                 orderForm.DEBTOR_NUMBER, orderForm.DEBTOR_EN, orderForm.DEBTOR_RU));
         return orderForm;
     }
@@ -109,11 +105,16 @@ public class OrderFormFactory {
         orderForm.NEW_PROJECT = create().setValue(type == XWORKS_ENG_EXT ? "0" : "1").setPosition("E21").setHidden(true);
         orderForm.EXTENSION = create().setValue(type == XWORKS_ENG_EXT ? "1" : "0").setPosition("E23").setHidden(true);
         orderForm.END_CUSTOMER_RU = create().setControl(controller.tfCustomer).setCheckType(CheckType.LETTERS_RU).setPosition("C25");
+        orderForm.ADDRESS_RU = create().setControl(controller.taAddressRu).setCheckType(CheckType.LETTERS_RU).setPosition("C27");
+        orderForm.POST_INDEX = create().setControl(controller.tfPostIndex).setCheckType(CheckType.DIGITS).setPosition("C29");
+
         orderForm.DONGLE = create().setControl(controller.tfDongle).setLabel(controller.lDongle).setVisible(type == XWORKS_ENG_EXT)
-                .setCheckType(CheckType.MULTI_DIGITS).setPosition("C27");
+                .setCheckType(CheckType.MULTI_DIGITS).setPosition("C31");
 
         orderForm.orderFormItems.addAll(Arrays.asList(orderForm.ID, orderForm.SYSTEM, orderForm.NEW_PROJECT,
-                orderForm.EXTENSION, orderForm.END_CUSTOMER_RU, orderForm.DONGLE, orderForm.DEBTOR_NUMBER, orderForm.DEBTOR_EN, orderForm.DEBTOR_RU));
+                orderForm.EXTENSION, orderForm.END_CUSTOMER_RU, orderForm.DONGLE, orderForm.DEBTOR_NUMBER,
+                orderForm.DEBTOR_EN, orderForm.DEBTOR_RU, orderForm.ADDRESS_RU, orderForm.POST_INDEX,
+                orderForm.DONGLE));
         return orderForm;
     }
 
@@ -133,7 +134,7 @@ public class OrderFormFactory {
         return wrongFilled;
     }
 
-    public ArrayList<OrderFormItem> getItems() {
+    public List<OrderFormItem> getItems() {
         return orderFormItems;
     }
 

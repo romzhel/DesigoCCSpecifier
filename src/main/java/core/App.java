@@ -31,7 +31,7 @@ import java.util.List;
 
 public class App {
     private static final Logger logger = LogManager.getLogger(App.class);
-    private static String buildInfo = "1.2.7 от 09.05.2021";
+    private static String buildInfo = "1.2.8 от 11.11.2021";
     private static InputStream appDataIS = App.class.getClassLoader().getResourceAsStream("data.xlsx");
     private static Workbook workbook;
     private static Stage mainStage;

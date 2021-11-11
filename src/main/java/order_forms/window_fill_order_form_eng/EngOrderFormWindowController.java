@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import order_forms.DataLoaderFromExcelToUi;
@@ -14,6 +15,7 @@ import price_list.PriceList;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class EngOrderFormWindowController implements Initializable {
@@ -27,6 +29,10 @@ public class EngOrderFormWindowController implements Initializable {
     public TextField tfDebtorRu;
     @FXML
     public TextField tfCustomer;
+    @FXML
+    public TextArea taAddressRu;
+    @FXML
+    public TextField tfPostIndex;
     @FXML
     public TextField tfDongle;
     @FXML
@@ -50,7 +56,7 @@ public class EngOrderFormWindowController implements Initializable {
         }
 
         int amount = Integer.parseInt(cbAmount.getValue());
-        ArrayList<OrderPosition> orderPositions = new ArrayList<>();
+        List<OrderPosition> orderPositions = new ArrayList<>();
 
         switch (EngOrderFormWindow.getType()) {
             case DCC_ENG:
