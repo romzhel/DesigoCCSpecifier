@@ -58,10 +58,15 @@
              text="Дебитор (англ)*"/>
       <TextField fx:id="tfDebtorEn" layoutX="235.0" layoutY="63.0" prefHeight="25.0" prefWidth="544.0"
                  promptText="заполняем латиницей"/>
-      <TextField fx:id="tfDebtorRu" layoutX="235.0" layoutY="97.0" prefHeight="25.0" prefWidth="544.0" promptText="заполняем кириллицей" />
-      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="101.0" prefHeight="17.0" prefWidth="158.0" text="Дебитор (рус)*" />
-      <TextArea fx:id="taAddressRu" layoutX="235.0" layoutY="320.0" prefHeight="53.0" prefWidth="544.0" promptText="заполняем кириллицей" />
-      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="321.0" prefHeight="17.0" prefWidth="158.0" text="Адрес (рус)*" />
-      <Button fx:id="btnLoadData" layoutX="67.0" layoutY="538.0" mnemonicParsing="false" onAction="#loadData" prefHeight="25.0" prefWidth="158.0" text="Загрузить данные" />
+      <TextField fx:id="tfDebtorRu" layoutX="235.0" layoutY="97.0" prefHeight="25.0" prefWidth="544.0"
+                 promptText="заполняем кириллицей"/>
+      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="101.0" prefHeight="17.0" prefWidth="158.0"
+             text="Дебитор (рус)*"/>
+      <TextArea fx:id="taAddressRu" layoutX="235.0" layoutY="320.0" prefHeight="53.0" prefWidth="544.0"
+                promptText="заполняем кириллицей"/>
+      <Label alignment="CENTER_RIGHT" layoutX="67.0" layoutY="321.0" prefHeight="17.0" prefWidth="158.0"
+             text="Адрес (рус)*"/>
+      <Button fx:id="btnLoadData" layoutX="67.0" layoutY="538.0" mnemonicParsing="false" onAction="#loadData"
+              prefHeight="25.0" prefWidth="158.0" text="Загрузить данные"/>
    </children>
 </AnchorPane>
