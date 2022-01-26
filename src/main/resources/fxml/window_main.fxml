@@ -35,20 +35,22 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="72.0" prefWidth="1198.0">
                <children>
-                    <Accordion fx:id="accrd" cache="true" layoutY="5.0" prefHeight="83.0" prefWidth="1192.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
-                        <panes>
-                            <TitledPane fx:id="accrd2" text="Опции системы">
-                                <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                        <children>
-                                            <TableView fx:id="tvOptions" layoutX="7.0" layoutY="8.0" prefHeight="200.0"
-                                                       prefWidth="200.0" styleClass="my_column"
-                                                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                <opaqueInsets>
-                                                    <Insets/>
-                                                </opaqueInsets>
-                                            </TableView>
+                   <Accordion fx:id="accrd" cache="true" layoutY="5.0" prefHeight="83.0" prefWidth="1192.0"
+                              AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="4.0"
+                              AnchorPane.topAnchor="3.0">
+                       <panes>
+                           <TitledPane fx:id="accrd2" text="Опции системы">
+                               <content>
+                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                           <TableView fx:id="tvOptions" layoutX="7.0" layoutY="8.0" prefHeight="200.0"
+                                                      prefWidth="200.0" styleClass="my_column"
+                                                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                               <opaqueInsets>
+                                                   <Insets/>
+                                               </opaqueInsets>
+                                           </TableView>
                                         </children>
                                         <padding>
                                             <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
@@ -180,5 +182,7 @@
                 </Pane>
             </children>
         </AnchorPane>
+        <ComboBox fx:id="cbSystemsAmount" prefHeight="25.0" prefWidth="58.0" AnchorPane.rightAnchor="5.0"
+                  AnchorPane.topAnchor="1.0"/>
     </children>
 </AnchorPane>

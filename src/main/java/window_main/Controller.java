@@ -1,6 +1,7 @@
 package window_main;
 
 import core.App;
+import core.Calculator;
 import core.VersionInfo;
 import dialogs.Dialogs;
 import excel.ExportSpecToExcel;
@@ -26,6 +27,7 @@ import window_main.menus.LicFormMenu;
 import java.awt.*;
 import java.net.URI;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -68,6 +70,8 @@ public class Controller implements Initializable {
     AnchorPane infoPane;
     @FXML
     Label build;
+    @FXML
+    ComboBox<Integer> cbSystemsAmount;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -75,8 +79,19 @@ public class Controller implements Initializable {
         initTables();
         initPanes();
         initMenu();
+        initSystemsAmount();
 
         App.setInfoPane(infoPane);
+    }
+
+    private void initSystemsAmount() {
+        cbSystemsAmount.getItems().addAll(Arrays.asList(1, 2));
+        cbSystemsAmount.getSelectionModel().select(0);
+        cbSystemsAmount.valueProperty().addListener((observable, oldValue, newValue) -> {
+            Calculator.getInstance().setSystemsAmount(newValue);
+            App.refreshTables();
+        });
+
     }
 
     private void initVersionLabels() {

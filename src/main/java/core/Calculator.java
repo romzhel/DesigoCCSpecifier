@@ -31,6 +31,7 @@ public class Calculator {
     private String errorOrderPosition = "";
     private BooleanProperty calculationStatus;
     private CalcType calcType;
+    private int systemsAmount = 1;
 
     private Calculator() {
         calculationStatus = new SimpleBooleanProperty(false);
@@ -85,7 +86,7 @@ public class Calculator {
 
     private void addFeatureSetToSpec(FeatureSet featureSet) {
         featureSet.addToSpecification(PriceList.getInstance().getNewOrderPosition(
-                featureSet.getArticle().concat(calcType.migrationSuffix), featureSet.getAmount()));
+                featureSet.getArticle().concat(calcType.migrationSuffix), featureSet.getAmount() * systemsAmount));
     }
 
     private void addPointPacketsToSpec(FeatureSet featureSet) {
@@ -98,6 +99,9 @@ public class Calculator {
 
             int forOrderPoints = calcType == CalcType.EXTENSION ? orderedPoints : orderedPoints - includedPoints;
             List<OrderPosition> specification = PointPackets.getInstance().getSpecification(forOrderPoints, sizeItem.getPointType());
+            for (OrderPosition orderPosition : specification) {
+                orderPosition.setAmount(orderPosition.getAmount() * systemsAmount);
+            }
             featureSet.addToSpecification(specification);
             logger.debug("Added to FeatSet '{}' points: {}", featureSet.getArticle(), specification);
         }
@@ -120,13 +124,13 @@ public class Calculator {
 
     private void addPositionToSpec(FeatureSet featureSet, String article) {
         logger.debug("Adding {} to {}", article, featureSet);
-        OrderPosition addedOrderPosition = PriceList.getInstance().getNewOrderPosition(article, 1);
+        OrderPosition addedOrderPosition = PriceList.getInstance().getNewOrderPosition(article, systemsAmount);
 
         if (addedOrderPosition != null) {
             featureSet.addToSpecification(addedOrderPosition);
             logger.debug("Changed featSet {}", featureSet);
         } else {
-            featureSet.addToSpecification(new OrderPosition(article, 1));
+            featureSet.addToSpecification(new OrderPosition(article, systemsAmount));
 
             if (!errorOrderPosition.equals(article)) {
                 new Dialogs().showMessage("Формирование спецификации", "Не была найдена заказная позиция в прайсе " +
@@ -187,6 +191,10 @@ public class Calculator {
 
     public boolean isCalcTypeEquals(CalcType calcType) {
         return this.calcType == calcType;
+    }
+
+    public void setSystemsAmount(int systemsAmount) {
+        this.systemsAmount = systemsAmount;
     }
 
     public enum CalcType {
