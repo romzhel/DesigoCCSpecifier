@@ -52,14 +52,13 @@ public class ExportOrderForm {
             cellDecorator.decorate("F" + rowNum + ":O" + rowNum, CellStyle.STYLE_LEFT_BORDER, op.getDescriptionRu());
             cellDecorator.decorate("P" + rowNum, CellStyle.STYLE_CENTER_BORDER, op.getAmount());
             cellDecorator.decorate("Q" + rowNum + ":R" + rowNum, CellStyle.STYLE_CURRENCY_BORDER, op.getCost());
-            cellDecorator.decorate("S" + rowNum + ":T" + rowNum, CellStyle.STYLE_CURRENCY_BORDER, op.getAmount() * op.getCost());
+            cellDecorator.decorate("S" + rowNum + ":T" + rowNum, CellStyle.STYLE_CURRENCY_BORDER, "=P" + rowNum + "*Q" + rowNum);
 
-            totalCost += op.getAmount() * op.getCost();
             rowNum++;
         }
 
         //total cost
-        cellDecorator.decorate("S" + rowNum + ":T" + rowNum, CellStyle.STYLE_CURRENCY_BIG_BOLD_BORDER, totalCost);
+        cellDecorator.decorate("S" + rowNum + ":T" + rowNum, CellStyle.STYLE_CURRENCY_BIG_BOLD_BORDER, "=SUM(S45:S" + (rowNum - 1) + ")");
 
         sheet.protectSheet(PASSWORD);
     }

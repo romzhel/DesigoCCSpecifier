@@ -71,9 +71,16 @@ public class CellDecorator {
         CellType cellType = null;
 
         if (value instanceof String) {
-            cell = row.createCell(getColumn(rangeParts[0]), CellType.STRING);
-            cellType = CellType.STRING;
-            cell.setCellValue((String) value);
+            if (((String) value).startsWith("=")) {
+                cell = row.createCell(getColumn(rangeParts[0]), CellType.FORMULA);
+                String formula = ((String) value).replaceFirst("\\=", "");
+                cell.setCellFormula(formula);
+                cellType = CellType.FORMULA;
+            } else {
+                cell = row.createCell(getColumn(rangeParts[0]), CellType.STRING);
+                cellType = CellType.STRING;
+                cell.setCellValue((String) value);
+            }
         } else if (value instanceof Double) {
             cell = row.createCell(getColumn(rangeParts[0]), CellType.NUMERIC);
             cellType = CellType.NUMERIC;

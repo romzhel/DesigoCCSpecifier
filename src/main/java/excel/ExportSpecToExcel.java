@@ -41,6 +41,7 @@ public class ExportSpecToExcel {
         boolean fileNeedToBeOpened = fileName == null;
         File file = null;
         HSSFWorkbook workbook = new HSSFWorkbook();
+        ExcelCellStyleFactory styleFactory = new ExcelCellStyleFactory(workbook);
         HSSFSheet sheet = workbook.createSheet("Desigo CC specification");
         String[] titles = new String[]{"№ п/п", "Заказной номер", "Наименование", "Описание", "Количество", "Стоимость", "ИТОГО"};
 
@@ -89,28 +90,26 @@ public class ExportSpecToExcel {
                 cell = row.createCell(5, CellType.NUMERIC);
                 cell.setCellValue(op.getCost());
             }
-            cell.setCellStyle(cellStyle);
+            cell.setCellStyle(styleFactory.CELL_CURRENCY_FORMAT_CENTER);
 
 
-            cell = row.createCell(6, CellType.NUMERIC);
-            cell.setCellStyle(cellStyle);
-            cell.setCellValue(op.getAmount() * op.getCost());
-
-            totalCost += op.getAmount() * op.getCost();
+            cell = row.createCell(6, CellType.FORMULA);
+            cell.setCellStyle(styleFactory.CELL_CURRENCY_FORMAT_CENTER);
+            cell.setCellFormula("E" + (rowNum + 1) + "*F" + (rowNum + 1));
         }
 
         //total cost
         rowNum++;
         row = sheet.createRow(rowNum);
-        cell = row.createCell(6, CellType.NUMERIC);
-        cell.setCellValue(totalCost);
-        cell.setCellStyle(cellStyle);
+        cell = row.createCell(6, CellType.FORMULA);
+        cell.setCellFormula("SUM(G2:G" + (rowNum - 2) + ")");
+        cell.setCellStyle(styleFactory.CELL_CURRENCY_FORMAT_CENTER_BOLD);
 
         //title row
         row = sheet.createRow(0);
         for (int col = 0; col < titles.length; col++) {
             cell = row.createCell(col, CellType.STRING);
-            cell.setCellStyle(cellStyle);
+            cell.setCellStyle(styleFactory.CELL_ALIGN_HCENTER_BOLD);
             cell.setCellValue(titles[col]);
             sheet.autoSizeColumn(col);
         }
