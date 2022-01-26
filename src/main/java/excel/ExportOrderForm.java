@@ -44,21 +44,21 @@ public class ExportOrderForm {
         double totalCost = 0D;
         int index = 1;
         for (OrderPosition op : specification) {
-            if (op == null || op.getArticle().equals("CMD.04")) continue;
+            if (op == null || op.getArticle().startsWith("CMD.")) continue;
 
-            cellDecorator.decorate("A" + rowNum, CellStyle.STYLE_CENTER_BORDER, index++);
-            cellDecorator.decorate("B" + rowNum + ":C" + rowNum, CellStyle.STYLE_CENTER_BORDER, op.getSsn());
-            cellDecorator.decorate("D" + rowNum + ":E" + rowNum, CellStyle.STYLE_CENTER_BORDER, op.getArticle());
-            cellDecorator.decorate("F" + rowNum + ":O" + rowNum, CellStyle.STYLE_LEFT_BORDER, op.getDescriptionRu());
+            cellDecorator.decorate("A" + rowNum, CellStyle.STYLE_CENTER_BORDER_PROTECTED, index++);
+            cellDecorator.decorate("B" + rowNum + ":C" + rowNum, CellStyle.STYLE_CENTER_BORDER_PROTECTED, op.getSsn());
+            cellDecorator.decorate("D" + rowNum + ":E" + rowNum, CellStyle.STYLE_CENTER_BORDER_PROTECTED, op.getArticle());
+            cellDecorator.decorate("F" + rowNum + ":O" + rowNum, CellStyle.STYLE_LEFT_BORDER_PROTECTED, op.getDescriptionRu());
             cellDecorator.decorate("P" + rowNum, CellStyle.STYLE_CENTER_BORDER, op.getAmount());
-            cellDecorator.decorate("Q" + rowNum + ":R" + rowNum, CellStyle.STYLE_CURRENCY_BORDER, op.getCost());
-            cellDecorator.decorate("S" + rowNum + ":T" + rowNum, CellStyle.STYLE_CURRENCY_BORDER, "=P" + rowNum + "*Q" + rowNum);
+            cellDecorator.decorate("Q" + rowNum + ":R" + rowNum, CellStyle.STYLE_CURRENCY_BORDER_PROTECTED, op.getCost());
+            cellDecorator.decorate("S" + rowNum + ":T" + rowNum, CellStyle.STYLE_CURRENCY_BORDER_PROTECTED, "=P" + rowNum + "*Q" + rowNum);
 
             rowNum++;
         }
 
         //total cost
-        cellDecorator.decorate("S" + rowNum + ":T" + rowNum, CellStyle.STYLE_CURRENCY_BIG_BOLD_BORDER, "=SUM(S45:S" + (rowNum - 1) + ")");
+        cellDecorator.decorate("S" + rowNum + ":T" + rowNum, CellStyle.STYLE_CURRENCY_BIG_BOLD_BORDER_PROTECTED, "=SUM(S45:S" + (rowNum - 1) + ")");
 
         sheet.protectSheet(PASSWORD);
     }

@@ -10,7 +10,7 @@ public class OrderFormItem<T extends Control> {
     private Position position;
     private String value;
     private boolean hidden;
-    private CellStyle cellStyle = CellStyle.STYLE_LEFT_BORDER;
+    private CellStyle cellStyle = CellStyle.STYLE_LEFT_BORDER_PROTECTED;
     private CheckType checkType = CheckType.LETTERS_EN;
     private CheckConditions linkedItem;
 

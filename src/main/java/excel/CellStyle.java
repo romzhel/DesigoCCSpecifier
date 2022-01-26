@@ -23,6 +23,11 @@ public enum CellStyle {
             return StyleFactory.createStyle(workbook).setAlignment(LEFT).setBorders(BorderStyle.MEDIUM).setProtected().get();
         }
     },
+    STYLE_CENTER_BORDER_PROTECTED {
+        public XSSFCellStyle get(XSSFWorkbook workbook) {
+            return StyleFactory.createStyle(workbook).setAlignment(CENTER).setBorders(BorderStyle.MEDIUM).setProtected().get();
+        }
+    },
     STYLE_CENTER_BORDER {
         public XSSFCellStyle get(XSSFWorkbook workbook) {
             return StyleFactory.createStyle(workbook).setAlignment(CENTER).setBorders(BorderStyle.MEDIUM).get();
@@ -33,10 +38,15 @@ public enum CellStyle {
             return StyleFactory.createStyle(workbook).setAlignment(CENTER).setCurrencyFormat().setBorders(BorderStyle.MEDIUM).get();
         }
     },
-    STYLE_CURRENCY_BIG_BOLD_BORDER {
+    STYLE_CURRENCY_BORDER_PROTECTED {
+        public XSSFCellStyle get(XSSFWorkbook workbook) {
+            return StyleFactory.createStyle(workbook).setAlignment(CENTER).setCurrencyFormat().setBorders(BorderStyle.MEDIUM).setProtected().get();
+        }
+    },
+    STYLE_CURRENCY_BIG_BOLD_BORDER_PROTECTED {
         public XSSFCellStyle get(XSSFWorkbook workbook) {
             return StyleFactory.createStyle(workbook).setAlignment(CENTER).setCurrencyFormat().setBorders(BorderStyle.MEDIUM)
-                    .setBold().setFontSize(220).get();
+                    .setBold().setFontSize(220).setProtected().get();
         }
     };
 

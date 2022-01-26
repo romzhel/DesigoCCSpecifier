@@ -65,7 +65,7 @@ public class OrderFormFactory {
         orderForm.EXTENSION = create().setValue(isMigration ? "0" : isNewProject ? "0" : "1").setPosition("E27").setHidden(true);
         orderForm.MIGRATION = create().setValue(isMigration ? "1" : "0").setPosition("E29").setHidden(true);
         orderForm.COUNTRY_FULL = create().setControl(controller.tfCountryFull).setPosition("C19");
-        orderForm.COUNTRY_SHORT = create().setControl(controller.tfCountryShort).setPosition("J19").setCellStyle(STYLE_CENTER_BORDER);
+        orderForm.COUNTRY_SHORT = create().setControl(controller.tfCountryShort).setPosition("J19").setCellStyle(STYLE_CENTER_BORDER_PROTECTED);
         orderForm.CUSTOMER = create().setControl(controller.tfCompany).setPosition("C21");
         orderForm.PROJECT_NAME = create().setControl(controller.tfProjectName).setPosition("C23");
         orderForm.END_CUSTOMER_RU = create().setControl(controller.tfCustomer).setCheckType(CheckType.LETTERS_RU).setPosition("C31");
