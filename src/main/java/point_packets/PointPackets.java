@@ -7,6 +7,7 @@ import tables_data.size.Size;
 import tables_data.size.SizeItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PointPackets {
@@ -56,12 +57,12 @@ public class PointPackets {
         }
     }
 
-    public ArrayList<OrderPosition> getSpecification(int pointAmount, String pointType) {
+    public List<OrderPosition> getSpecification(int pointAmount, String pointType) {
         for (PointPacket pointPacket : pointPackets) {
             if (pointPacket.getPointType().equals(pointType)) {
                 return pointPacket.getSpecification(pointAmount);
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 }
